@@ -1,0 +1,2855 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    
+    <style id="auth-cloak">
+    body { display: none !important; }
+    </style>
+
+    <script>
+    (function() {
+        const params = new URLSearchParams(window.location.search);
+        const validKey = 'mariage27';
+
+        if (params.get('cle') === validKey) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const cloak = document.getElementById('auth-cloak');
+                if (cloak) cloak.remove();
+            });
+        } else {
+            document.addEventListener('DOMContentLoaded', () => {
+                document.body.innerHTML = `
+                <div style="background-color:#FDFBF7;color:#4A403A;font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;margin:0;text-align:center;padding:20px;">
+                    <svg style="width:50px;height:50px;margin-bottom:20px;opacity:0.5;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                    <h1 style="font-size:2rem;margin-bottom:10px;">Accès réservé</h1>
+                    <p>Veuillez utiliser le QR code présent sur votre faire-part pour accéder à cette page.</p>
+                </div>
+                `;
+                const cloak = document.getElementById('auth-cloak');
+                if (cloak) cloak.remove();
+            });
+        }
+    })();
+    </script>
+
+    <title>Mariage Clémence & Lucas - 10 Avril 2027</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        parchment: '#FDFBF7', 
+                        ink: '#4A403A',       
+                        accent: '#F4ECE1',    
+                        pastelPink: '#F9EBEA',
+                        pastelGreen: '#E8F8F5',
+                        pastelBlue: '#EBF5FB',
+                        pastelYellow: '#FEF9E7',
+                        terracotta: '#D98880',
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Lato', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body { background-color: #FDFBF7; color: #4A403A; transition: background-color 1s ease; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #D98880; border-radius: 4px; }
+
+        /* FOND UNIQUE DU DOMAINE */
+        .bg-fixed-watermark {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: url('domaine.png');
+            background-size: cover; background-position: center;
+            opacity: 0.6; z-index: 0; pointer-events: none; 
+            transition: opacity 1s ease, filter 1s ease;
+        }
+
+        /* VERRE DÉPOLI POUR LAISSER APPARAÎTRE LE FOND */
+        .glass-panel { background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); }
+        .glass-panel-pastel { background-color: rgba(249, 235, 234, 0.85); backdrop-filter: blur(8px); }
+
+        .polaroid {
+            background: #fff; padding: 1rem 1rem 3rem 1rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06); transform: rotate(-2deg);
+            transition: transform 0.3s ease, filter 1s ease;
+        }
+        .polaroid:hover { transform: rotate(0deg) scale(1.02); }
+
+        .hidden-element { display: none !important; }
+        .no-scroll { overflow: hidden !important; height: 100vh !important; }
+
+        .scratch-container { position: relative; width: 300px; height: 100px; margin: 0 auto; user-select: none; }
+        .scratch-text {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; font-family: 'Playfair Display', serif; font-weight: bold;
+            letter-spacing: 0.1em; background-color: #fff; border: 2px solid #D98880; color: #D98880; z-index: 1;
+        }
+        #scratch-canvas { position: absolute; top: 0; left: 0; z-index: 2; cursor: pointer; touch-action: none; }
+
+        /* ==================== THEME MYSTÈRE (NUANCES DE GRIS) ==================== */
+        body.easter-egg-mode { 
+            background-color: #2b2b2b !important; 
+            color: #d1d5db !important; 
+        }
+        body.easter-egg-mode .bg-fixed-watermark { 
+            filter: grayscale(100%) brightness(0.4) !important; 
+        }
+
+        /* Tous les panneaux et couleurs pastels passent en gris translucide */
+        .easter-egg-mode .glass-panel, 
+        .easter-egg-mode .glass-panel-pastel, 
+        .easter-egg-mode .bg-white,
+        .easter-egg-mode .bg-white\/70,
+        .easter-egg-mode .bg-white\/80,
+        .easter-egg-mode .bg-white\/90,
+        .easter-egg-mode .bg-pastelPink, 
+        .easter-egg-mode .bg-pastelYellow, 
+        .easter-egg-mode .bg-pastelGreen, 
+        .easter-egg-mode .bg-pastelBlue,
+        .easter-egg-mode .bg-indigo-50,
+        .easter-egg-mode .bg-amber-50,
+        .easter-egg-mode nav,
+        .easter-egg-mode header {
+            background-color: rgba(45, 45, 45, 0.85) !important; 
+            border-color: #555 !important;
+            color: #e5e5e5 !important;
+        }
+
+        /* Forcer tous les textes colorés en gris clair (Y COMPRIS LE COMPTE À REBOURS) */
+        .easter-egg-mode .text-ink, 
+        .easter-egg-mode .text-terracotta, 
+        .easter-egg-mode .text-gray-500,
+        .easter-egg-mode .text-gray-600, 
+        .easter-egg-mode .text-gray-700,
+        .easter-egg-mode .text-emerald-700, 
+        .easter-egg-mode .text-amber-700,
+        .easter-egg-mode .text-amber-900,
+        .easter-egg-mode .text-sky-700, 
+        .easter-egg-mode .text-indigo-700,
+        .easter-egg-mode #countdown span {
+            color: #cccccc !important;
+        }
+
+        /* Lignes et bordures en gris */
+        .easter-egg-mode .bg-pink-300, .easter-egg-mode .bg-pink-200, 
+        .easter-egg-mode .bg-yellow-200, .easter-egg-mode .bg-green-200, 
+        .easter-egg-mode .bg-blue-200, .easter-egg-mode .bg-indigo-200,
+        .easter-egg-mode .bg-terracotta { background-color: #666 !important; }
+        
+        .easter-egg-mode .border-pink-100, .easter-egg-mode .border-pink-200,
+        .easter-egg-mode .border-yellow-100, .easter-egg-mode .border-yellow-200,
+        .easter-egg-mode .border-green-100, .easter-egg-mode .border-green-200,
+        .easter-egg-mode .border-blue-100, .easter-egg-mode .border-blue-200,
+        .easter-egg-mode .border-indigo-100, .easter-egg-mode .border-indigo-200,
+        .easter-egg-mode .border-terracotta { border-color: #555 !important; }
+
+        /* Photos en noir et blanc (sauf le logo principal) */
+        .easter-egg-mode img:not(#main-logo) { 
+            filter: grayscale(100%) !important; 
+        }
+
+        /* --- ÉLÉMENTS SECRETS EN ROUGE --- */
+        .secret-char { transition: color 1s ease; }
+        .easter-egg-mode .secret-char { 
+            color: #ef4444 !important; 
+            font-weight: 900 !important; 
+            text-shadow: 0 0 8px rgba(239, 68, 68, 0.8) !important; 
+        }
+
+        /* REVELATION DU BOUTON AFTER SECRET (écrase le hidden-element) */
+        .easter-egg-mode #timeline-secret {
+            display: flex !important; 
+            border-color: #ef4444 !important;
+            background-color: #111 !important;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4) !important;
+        }
+        .easter-egg-mode #timeline-secret div:first-child {
+            background-color: #330000 !important;
+            border-right-color: #ef4444 !important;
+        }
+        .easter-egg-mode #timeline-secret span, 
+        .easter-egg-mode #timeline-secret h3 {
+            color: #ef4444 !important;
+        }
+
+        /* Zone à gratter en nuances de gris */
+        .easter-egg-mode .scratch-text { 
+            background-color: #111 !important; 
+            border-color: #555 !important; 
+            color: #cccccc !important; 
+        }
+
+        /* Carte Google Maps en nuances de gris pures (le cadre rouge dynamique est géré par JS) */
+        .easter-egg-mode iframe { 
+            filter: grayscale(100%) contrast(1.2) brightness(0.8) !important; 
+            border: none !important;
+        }
+
+        /* ==================== THEME ADMIN TERMINAL PUR NOIR & VERT ==================== */
+        #admin-dashboard {
+            background-color: #000000 !important; 
+            color: #34d399 !important; 
+        }
+        #admin-dashboard .glass-panel {
+            background-color: #050505 !important;
+            border: 1px solid #065f46 !important;
+        }
+        #admin-dashboard h1, #admin-dashboard h3, #admin-dashboard h4 {
+            color: #6ee7b7 !important;
+        }
+        #admin-dashboard p, #admin-dashboard span {
+            color: #34d399 !important;
+        }
+        #admin-dashboard table th {
+            background-color: #022c22 !important;
+            color: #6ee7b7 !important;
+            border-bottom: 1px solid #065f46 !important;
+            cursor: pointer;
+            user-select: none;
+        }
+        #admin-dashboard table th:hover {
+            background-color: #064e3b !important;
+        }
+        #admin-dashboard table td {
+            color: #ecfdf5 !important; /* Blanc teinté vert très lisible */
+            border-color: #064e3b !important;
+            background-color: #000000 !important;
+        }
+        #admin-dashboard input[type="text"] {
+            background-color: #000000 !important;
+            color: #34d399 !important;
+            border: 1px solid #065f46 !important;
+        }
+        #admin-dashboard input[type="text"]::placeholder {
+            color: #047857 !important;
+        }
+        /* Cartes de statistiques / graphiques en mode noir pur */
+        #admin-dashboard .bg-white\/60, 
+        #admin-dashboard .bg-white\/70, 
+        #admin-dashboard .bg-white\/80, 
+        #admin-dashboard .bg-pastelPink\/55, 
+        #admin-dashboard .bg-pastelPink\/50 {
+            background-color: #050505 !important;
+            border: 1px solid #065f46 !important;
+        }
+
+        #chat-messages::-webkit-scrollbar { width: 4px; }
+        #chat-messages::-webkit-scrollbar-track { background: transparent; }
+        #chat-messages::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 4px; }
+
+        @keyframes chaos-glitch {
+            0% { filter: invert(0) blur(0px); transform: translate(0, 0) scale(1); }
+            20% { filter: invert(1) blur(2px); transform: translate(-15px, 10px) scale(1.05); }
+            40% { filter: invert(0) blur(0px); transform: translate(15px, -10px) scale(0.95); }
+            60% { filter: invert(1) blur(5px); transform: translate(-10px, 15px) scale(1.1); }
+            80% { filter: invert(0) blur(1px); transform: translate(10px, -15px) scale(0.9); }
+            100% { filter: invert(1) blur(0px); transform: translate(0, 0) scale(1); }
+        }
+        .glitch-mode { animation: chaos-glitch 0.15s infinite; overflow: hidden !important; }
+    </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden selection:bg-terracotta selection:text-white">
+
+    <!-- FILIGRANE / FOND FIXE DU DOMAINE -->
+    <div class="bg-fixed-watermark"></div>
+
+    <!-- Tête de clémence flottante -->
+    <img id="floating-head" src="tete-clemence.png" class="fixed w-16 h-16 object-contain cursor-pointer hidden-element drop-shadow-lg" style="z-index: 9999; top: 0; left: 0;" alt="Clémence">
+
+    <!-- WRAPPER GLOBAL -->
+    <div class="relative z-10">
+        
+        <!-- ÉCRAN PORTIER -->
+        <div id="gatekeeper" class="min-h-screen flex flex-col items-center justify-center px-6 py-12">
+            <div class="relative max-w-md w-full mt-20">
+                <div class="absolute -top-64 left-1/2 transform -translate-x-1/2 z-10 pointer-events-none">
+                    <img src="logo_without_bg.png" alt="Logo" class="w-[28rem] h-auto object-contain drop-shadow-md" onerror="this.src='https://placehold.co/200x200/F9EBEA/4A403A?text=C%26L'">
+                </div>
+
+                <form onsubmit="event.preventDefault(); unlockSite();" class="w-full text-center glass-panel p-6 pt-10 rounded-2xl shadow-xl border border-pink-100 bg-white/80 backdrop-blur-md">
+                    <h1 class="font-serif text-2xl mb-1 text-ink">Bienvenue sur le site du mariage <br> de <br> Clémence et Lucas<br></h1>
+                    <p class="text-xs text-gray-500 mb-6">Veuillez vous identifier pour accéder à votre invitation</p>
+                    
+                    <div class="space-y-3 mb-5">
+                        <div><input type="text" id="login-first" placeholder="Prénom" class="w-full bg-white/70 border border-pink-200 px-4 py-2.5 rounded-lg focus:outline-none focus:border-terracotta transition-colors font-sans text-center text-sm"></div>
+                        <div><input type="text" id="login-last" placeholder="Nom" class="w-full bg-white/70 border border-pink-200 px-4 py-2.5 rounded-lg focus:outline-none focus:border-terracotta transition-colors font-sans text-center text-sm"></div>
+                    </div>
+                    
+                    <div id="login-error" class="bg-red-50 text-red-600 border border-red-200 p-2.5 text-xs mb-5 hidden-element rounded-lg"></div>
+                    
+                    <button type="submit" class="w-full bg-terracotta text-white py-3 rounded-lg uppercase tracking-widest text-xs font-bold hover:bg-opacity-90 transition-colors shadow-md">
+                        Accéder au site
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div id="delphine-modal" class="hidden-element fixed inset-0 z-[10000] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="glass-panel max-w-md w-full p-8 rounded-3xl text-center shadow-2xl border border-pink-200">
+                <h3 class="font-serif text-2xl text-ink mb-4">Ehh vous êtes deux Delphine Duclos !</h3>
+                <p class="text-sm text-gray-600 mb-8 font-sans">Comment je suis censé savoir laquelle c'est ? T'es Daphine la raleuse qui fume comme un pompier (mais que Clémence adore quand même, elle qui déteste les fumeurs habituellement) ou tu es Delphine Davy qui habite au Mans (promis j'ai pas eu ces infos sur le darknet après le piratage de la DGFIP)</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="selectDelphine('daphine')" class="bg-terracotta text-white px-6 py-3 rounded-xl text-xs uppercase tracking-widest font-bold hover:bg-opacity-90 transition-colors shadow-sm">
+                        Daphine la râleuse 🚬
+                    </button>
+                    <button onclick="selectDelphine('delphine')" class="bg-ink text-white px-6 py-3 rounded-xl text-xs uppercase tracking-widest font-bold hover:bg-opacity-90 transition-colors shadow-sm">
+                        Delphine Davy 🌟
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="demande-detail-modal" class="hidden-element fixed inset-0 z-[10000] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 font-sans">
+            <div class="bg-[#050505] border border-emerald-500/50 max-w-lg w-full p-6 rounded-2xl text-emerald-300 shadow-2xl space-y-4">
+                <h3 class="font-serif text-2xl font-bold text-emerald-400 mb-2">Examen de la demande d'invité</h3>
+                <div id="demande-modal-content" class="space-y-2 text-sm bg-black p-4 border border-emerald-900 rounded-xl">
+                    <!-- Injecté dynamiquement -->
+                </div>
+                <div class="flex justify-end space-x-4 pt-4 border-t border-emerald-900">
+                    <button onclick="closeDemandeModal()" class="px-4 py-2 rounded-lg bg-gray-800 text-gray-300 hover:bg-gray-700 transition-colors text-xs font-bold uppercase">Fermer</button>
+                    <button id="modal-btn-refuser" onclick="" class="px-5 py-2 rounded-lg bg-red-700 hover:bg-red-600 text-black font-bold transition-colors text-xs uppercase tracking-wider">Refuser</button>
+                    <button id="modal-btn-valider" onclick="" class="px-5 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-black font-bold transition-colors text-xs uppercase tracking-wider">Accepter</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- POP-UP RÉCAPITULATIF DES RÉPONSES DE L'INVITÉ -->
+        <div id="guest-recap-modal" class="hidden-element fixed inset-0 z-[10000] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 font-sans">
+            <div class="glass-panel max-w-md w-full p-8 rounded-3xl text-left shadow-2xl border border-pink-200 relative">
+                <h3 class="font-serif text-2xl text-ink mb-4 text-center">Tes réponses enregistrées</h3>
+                <div id="guest-recap-content" class="space-y-3 text-sm text-gray-700 mb-6 bg-white/70 p-4 rounded-xl border border-pink-100 font-sans">
+                    <!-- Injecté dynamiquement -->
+                </div>
+                <div class="text-center">
+                    <button onclick="closeGuestRecapModal()" class="bg-terracotta text-white px-6 py-2.5 rounded-xl text-xs uppercase tracking-widest font-bold hover:bg-opacity-90 transition-colors shadow-sm">
+                        Fermer
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- POP-UP DÉTAILS DE LA CHAMBRE -->
+        <div id="room-detail-modal" class="hidden-element fixed inset-0 z-[10000] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 font-sans">
+            <div class="glass-panel max-w-lg w-full p-8 rounded-3xl text-left shadow-2xl border border-pink-200 relative">
+                <h3 class="font-serif text-2xl text-ink mb-2 text-center">Détails de votre hébergement</h3>
+                <p id="room-batiment-subtitle" class="text-xs text-center text-gray-500 uppercase tracking-widest mb-6"></p>
+                
+                <div id="room-detail-content" class="space-y-4 text-sm text-gray-700 mb-8 bg-white/70 p-5 rounded-2xl border border-pink-100 font-sans">
+                    <!-- Injecté dynamiquement -->
+                </div>
+
+                <div class="text-center">
+                    <button onclick="closeRoomModal()" class="bg-terracotta text-white px-6 py-2.5 rounded-xl text-xs uppercase tracking-widest font-bold hover:bg-opacity-90 transition-colors shadow-sm">
+                        Fermer
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- POP-UP ALERTE EMAIL CHAMBRE -->
+        <div id="alert-email-modal" class="hidden-element fixed inset-0 z-[10000] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 font-sans">
+            <div class="glass-panel max-w-md w-full p-8 rounded-3xl text-left shadow-2xl border border-pink-200 relative">
+                <h3 class="font-serif text-2xl text-ink mb-2 text-center">Être prévenu(e)</h3>
+                <p class="text-xs text-center text-gray-500 mb-6">Entre ton adresse e-mail pour être prévenu dès qu'une chambre te sera attribuée.</p>
+                
+                <form onsubmit="submitAlertEmail(event)" class="space-y-4">
+                    <input type="email" id="alert-email-input" placeholder="ton.adresse@exemple.com" required class="w-full bg-white/70 border border-pink-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-terracotta">
+                    <div id="alert-email-success" class="text-xs text-emerald-600 font-bold hidden-element text-center"></div>
+                    <div class="flex justify-center gap-3 pt-2">
+                        <button type="button" onclick="closeAlertEmailModal()" class="px-5 py-2.5 rounded-xl bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors text-xs font-bold uppercase">Fermer</button>
+                        <button type="submit" class="bg-terracotta text-white px-6 py-2.5 rounded-xl text-xs uppercase tracking-widest font-bold hover:bg-opacity-90 transition-colors shadow-sm">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- POP-UP MODIFICATION CHAMBRE ADMIN -->
+        <div id="admin-room-modal" class="hidden-element fixed inset-0 z-[10000] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 font-sans">
+            <div class="bg-[#050505] border border-emerald-500/50 max-w-md w-full p-6 rounded-2xl text-emerald-300 shadow-2xl space-y-4 font-mono">
+                <h3 class="font-serif text-2xl font-bold text-emerald-400 mb-2">Gérer les occupants</h3>
+                <p id="admin-modal-room-title" class="text-xs text-gray-400 mb-4"></p>
+                
+                <div id="admin-modal-occupants-list" class="space-y-3 max-h-48 overflow-y-auto bg-black p-3 border border-emerald-900 rounded-xl">
+                    <!-- Liste des occupants actuels avec bouton retirer -->
+                </div>
+
+                <div class="pt-4 border-t border-emerald-950 space-y-2">
+                    <label class="block text-xs uppercase tracking-widest text-emerald-500 font-bold">Ajouter ou déplacer un invité ici :</label>
+                    <div class="flex gap-2">
+                        <select id="admin-select-guest" class="flex-1 bg-black border border-emerald-800 text-emerald-300 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-emerald-500">
+                            <option value="" disabled selected>Sélectionner un invité...</option>
+                        </select>
+                        <button onclick="assignGuestToCurrentRoom()" class="bg-emerald-600 hover:bg-emerald-500 text-black px-4 py-2 rounded-lg font-bold text-xs uppercase transition-colors">Assigner</button>
+                    </div>
+                </div>
+
+                <div class="flex justify-end pt-4 border-t border-emerald-900">
+                    <button onclick="closeAdminRoomModal()" class="px-5 py-2 rounded-lg bg-gray-800 text-gray-300 hover:bg-gray-700 transition-colors text-xs font-bold uppercase">Fermer</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== DASHBOARD ADMIN DE DONALD TRUMP ==================== -->
+        <div id="admin-dashboard" class="hidden-element min-h-screen p-4 md:p-12 font-mono">
+            <div class="max-w-7xl mx-auto glass-panel p-6 md:p-8 rounded-2xl shadow-2xl border border-green-500/30">
+                
+                <!-- TOP BARRE ADMIN -->
+                <div class="flex flex-col md:flex-row justify-between items-center mb-8 border-b border-gray-300 pb-6 gap-4">
+                    <div>
+                        <h1 class="font-serif text-3xl md:text-4xl text-ink font-bold">TERMINAL ADMIN_SYS</h1>
+                        <p class="text-xs text-gray-500 mt-1">Connecté en tant que: <span class="text-emerald-600 font-bold">Donald TRUMP</span></p>
+                    </div>
+                    
+                    <!-- BARRE DE NAVIGATION SPÉCIALE ADMIN -->
+                    <div class="flex flex-wrap gap-2 text-xs font-bold uppercase tracking-wider">
+                        <button onclick="switchAdminTab('accueil')" id="nav-accueil" class="admin-nav-btn px-4 py-2 rounded-lg bg-terracotta text-white shadow-sm transition-all">Accueil</button>
+                        <button onclick="switchAdminTab('liste')" id="nav-liste" class="admin-nav-btn px-4 py-2 rounded-lg bg-white/70 text-ink hover:bg-terracotta hover:text-white transition-all">Liste Invité</button>
+                        <button onclick="switchAdminTab('stats')" id="nav-stats" class="admin-nav-btn px-4 py-2 rounded-lg bg-white/70 text-ink hover:bg-terracotta hover:text-white transition-all">Statistique</button>
+                        <button onclick="switchAdminTab('regimes')" id="nav-regimes" class="admin-nav-btn px-4 py-2 rounded-lg bg-white/70 text-ink hover:bg-terracotta hover:text-white transition-all">Régime spéciaux</button>
+                        <button onclick="switchAdminTab('hebergement')" id="nav-hebergement" class="admin-nav-btn px-4 py-2 rounded-lg bg-white/70 text-ink hover:bg-terracotta hover:text-white transition-all">Hebergement</button>
+                        <button onclick="switchAdminTab('chambres')" id="nav-chambres" class="admin-nav-btn px-4 py-2 rounded-lg bg-white/70 text-ink hover:bg-terracotta hover:text-white transition-all">Gestion chambre</button>
+                        <button onclick="switchAdminTab('demandes')" id="nav-demandes" class="admin-nav-btn px-4 py-2 rounded-lg bg-white/70 text-ink hover:bg-terracotta hover:text-white transition-all">Demande invité</button>
+                        <button onclick="location.reload()" class="px-4 py-2 rounded-lg bg-red-900 text-white hover:bg-red-800 transition-all">LOGOUT</button>
+                    </div>
+                </div>
+
+                <!-- CONTENU DES ONGLETS ADMIN -->
+                
+                <!-- ONGLET 1 : ACCUEIL -->
+                <div id="tab-accueil" class="admin-tab space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-black border border-emerald-900 p-6 rounded-xl shadow-sm">
+                            <h3 class="text-xs uppercase tracking-widest text-emerald-600 mb-2 font-bold">Total Réponses</h3>
+                            <p id="stat-total" class="text-4xl font-serif font-bold text-emerald-400">0</p>
+                        </div>
+                        <div class="bg-black border border-emerald-900 p-6 rounded-xl shadow-sm">
+                            <h3 class="text-xs uppercase tracking-widest text-emerald-600 mb-2 font-bold">Présents Soirée</h3>
+                            <p id="stat-soiree" class="text-4xl font-serif font-bold text-emerald-400">0</p>
+                        </div>
+                        <div class="bg-black border border-emerald-900 p-6 rounded-xl shadow-sm">
+                            <h3 class="text-xs uppercase tracking-widest text-emerald-600 mb-2 font-bold">Régimes / Allergies</h3>
+                            <p id="stat-allergies" class="text-4xl font-serif font-bold text-amber-500">0</p>
+                        </div>
+                    </div>
+
+                    <!-- Nouvelle grille pour les quotas d'invitation (is...) -->
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                        <div class="bg-black border border-emerald-900 p-4 rounded-xl text-center">
+                            <h4 class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold mb-1">Mairie</h4>
+                            <p id="stat-is-mairie" class="text-2xl font-serif font-bold text-emerald-400">- / -</p>
+                        </div>
+                        <div class="bg-black border border-emerald-900 p-4 rounded-xl text-center">
+                            <h4 class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold mb-1">Cocktail</h4>
+                            <p id="stat-is-cocktail" class="text-2xl font-serif font-bold text-emerald-400">- / -</p>
+                        </div>
+                        <div class="bg-black border border-emerald-900 p-4 rounded-xl text-center">
+                            <h4 class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold mb-1">Repas</h4>
+                            <p id="stat-is-repas" class="text-2xl font-serif font-bold text-emerald-400">- / -</p>
+                        </div>
+                        <div class="bg-black border border-emerald-900 p-4 rounded-xl text-center">
+                            <h4 class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold mb-1">Dormir</h4>
+                            <p id="stat-is-dormir" class="text-2xl font-serif font-bold text-emerald-400">- / -</p>
+                        </div>
+                        <div class="bg-black border border-emerald-900 p-4 rounded-xl text-center">
+                            <h4 class="text-[10px] uppercase tracking-widest text-emerald-600 font-bold mb-1">Brunch</h4>
+                            <p id="stat-is-brunch" class="text-2xl font-serif font-bold text-emerald-400">- / -</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ONGLET 2 : LISTE INVITÉ AVEC RECHERCHE -->
+                <div id="tab-liste" class="admin-tab hidden-element space-y-4">
+                    <div class="flex justify-between items-center gap-4">
+                        <div class="p-4 border-b border-gray-100 bg-pastelPink/50 rounded-xl w-full">
+                            <h3 class="font-serif text-xl font-bold text-ink mb-2">Base de données complète</h3>
+                            <input type="text" id="admin-search-input" onkeyup="filterAdminTable()" placeholder="Rechercher par prénom, nom, régime, chambre..." class="w-full bg-white border border-pink-200 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-terracotta text-ink">
+                        </div>
+                    </div>
+                    <div class="bg-white/80 border border-pink-100 rounded-xl shadow-sm overflow-hidden">
+                        <div class="overflow-x-auto max-h-[500px]">
+                            <table class="w-full text-left border-collapse text-xs" id="admin-sortable-table">
+                                <thead class="sticky top-0 bg-pastelPink text-gray-700">
+                                    <tr>
+                                        <th onclick="sortTable(9)" class="p-3 border-b text-center">Réponse ↕</th>
+                                        <th onclick="sortTable(0)" class="p-3 border-b">Prénom ↕</th>
+                                        <th onclick="sortTable(1)" class="p-3 border-b">Nom ↕</th>
+                                        <th onclick="sortTable(2)" class="p-3 border-b">Téléphone ↕</th>
+                                        <th onclick="sortTable(3)" class="p-3 border-b">Mairie ↕</th>
+                                        <th onclick="sortTable(4)" class="p-3 border-b">Cocktail ↕</th>
+                                        <th onclick="sortTable(5)" class="p-3 border-b">Repas ↕</th>
+                                        <th onclick="sortTable(6)" class="p-3 border-b">Dormir ↕</th>
+                                        <th onclick="sortTable(7)" class="p-3 border-b">Brunch ↕</th>
+                                        <th onclick="sortTable(8)" class="p-3 border-b">Chambre ↕</th>
+                                        <th onclick="sortTable(9)" class="p-3 border-b">Date Réponse ↕</th>
+                                        <th onclick="sortTable(10)" class="p-3 border-b">Rep. Cocktail ↕</th>
+                                        <th onclick="sortTable(11)" class="p-3 border-b">Rep. Repas ↕</th>
+                                        <th onclick="sortTable(12)" class="p-3 border-b">Rep. Brunch ↕</th>
+                                        <th onclick="sortTable(13)" class="p-3 border-b">Rep. Dormir ↕</th>
+                                        <th onclick="sortTable(14)" class="p-3 border-b">Allergies ↕</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-full-table-body">
+                                    <tr><td colspan="15" class="p-6 text-center text-gray-500">Chargement...</td></tr>
+                                </tbody>
+                            </table>
+                            <div id="admin-no-result" class="hidden-element p-8 text-center text-red-400 font-bold">Aucun résultat trouvé.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ONGLET 3 : STATISTIQUE (Graphiques Disques) -->
+                <div id="tab-stats" class="admin-tab hidden-element space-y-8">
+                    <h3 class="font-serif text-2xl font-bold text-ink">Répartition des Réponses par Événement</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="stats-charts-container">
+                        <!-- Généré dynamiquement -->
+                    </div>
+                </div>
+
+                <!-- ONGLET 4 : RÉGIME SPÉCIAUX -->
+                <div id="tab-regimes" class="admin-tab hidden-element">
+                    <div class="bg-white/80 border border-pink-100 rounded-xl shadow-sm overflow-hidden">
+                        <div class="p-4 border-b border-gray-100 bg-pastelPink/50"><h3 class="font-serif text-xl font-bold text-ink">Liste des Régimes Spéciaux</h3></div>
+                        <div class="p-6 overflow-x-auto max-h-[500px]">
+                            <table class="w-full text-left border-collapse text-sm">
+                                <thead>
+                                    <tr class="bg-pastelPink text-xs uppercase tracking-wider text-gray-700">
+                                        <th class="p-3 border-b">Prénom</th><th class="p-3 border-b">Nom</th><th class="p-3 border-b">Régime / Allergie</th><th class="p-3 border-b text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-regimes-body">
+                                    <tr><td colspan="3" class="p-4 text-center text-gray-500">Aucun régime trouvé.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ONGLET 5 : HEBERGEMENT -->
+                <div id="tab-hebergement" class="admin-tab hidden-element">
+                    <div class="bg-white/80 border border-pink-100 rounded-xl shadow-sm overflow-hidden">
+                        <div class="p-4 border-b border-gray-100 bg-pastelPink/50">
+                            <h3 class="font-serif text-xl font-bold text-ink">Anomalies Hébergement</h3>
+                            <p class="text-xs text-gray-500">Personnes autorisées à dormir sur place mais ayant répondu "Ailleurs" ou "Non"</p>
+                        </div>
+                        <div class="p-6 overflow-x-auto max-h-[500px]">
+                            <table class="w-full text-left border-collapse text-sm">
+                                <thead>
+                                    <tr class="bg-pastelPink text-xs uppercase tracking-wider text-gray-700">
+                                        <th class="p-3 border-b">Prénom</th><th class="p-3 border-b">Nom</th><th class="p-3 border-b">Réponse Hébergement</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-heb-body">
+                                    <tr><td colspan="3" class="p-4 text-center text-gray-500">Aucune anomalie.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- ONGLET : GESTION DES CHAMBRES -->
+                <div id="tab-chambres" class="admin-tab hidden-element space-y-6 font-mono">
+                    <!-- Cartes de statistiques lits -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-black border border-emerald-900 p-6 rounded-xl shadow-sm">
+                            <h3 class="text-xs uppercase tracking-widest text-emerald-600 mb-2 font-bold">Places Occupées / Total</h3>
+                            <p id="stat-places-chambres" class="text-4xl font-serif font-bold text-emerald-400">0 / 0</p>
+                        </div>
+                        <div class="bg-black border border-emerald-900 p-6 rounded-xl shadow-sm">
+                            <h3 class="text-xs uppercase tracking-widest text-emerald-600 mb-2 font-bold">Chambres Enregistrées</h3>
+                            <p id="stat-total-chambres" class="text-4xl font-serif font-bold text-emerald-400">0</p>
+                        </div>
+                    </div>
+
+                    <!-- Tableau de gestion -->
+                    <div class="bg-white/80 border border-pink-100 rounded-xl shadow-sm overflow-hidden p-6">
+                        <h3 class="font-serif text-xl font-bold text-ink mb-4">Répartition et Affectation des Chambres</h3>
+                        <div class="overflow-x-auto max-h-[500px]">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead class="sticky top-0 bg-pastelPink text-gray-700">
+                                    <tr>
+                                        <th class="p-3 border-b">Bâtiment</th>
+                                        <th class="p-3 border-b">N° Chambre</th>
+                                        <th class="p-3 border-b text-center">Capacité</th>
+                                        <th class="p-3 border-b">Configuration Lits</th>
+                                        <th class="p-3 border-b">Occupants Actuels</th>
+                                        <th class="p-3 border-b text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-chambres-body">
+                                    <tr><td colspan="6" class="p-6 text-center text-gray-500">Chargement...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ONGLET : DEMANDE INVITÉ -->
+                <div id="tab-demandes" class="admin-tab hidden-element space-y-4">
+                    <div class="bg-white/80 border border-pink-100 rounded-xl shadow-sm overflow-hidden p-6">
+                        <h3 class="font-serif text-xl font-bold text-ink mb-4">Validation des demandes d'invités</h3>
+                        <div class="overflow-x-auto max-h-[500px]">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead class="sticky top-0 bg-pastelPink text-gray-700">
+                                    <tr>
+                                        <th class="p-3 border-b">Prénom</th>
+                                        <th class="p-3 border-b">Nom</th>
+                                        <th class="p-3 border-b">Téléphone</th>
+                                        <th class="p-3 border-b">Demandé par</th>
+                                        <th class="p-3 border-b">Email Notif</th>
+                                        <th class="p-3 border-b">Statut</th>
+                                        <th class="p-3 border-b text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-demandes-body">
+                                    <tr><td colspan="7" class="p-6 text-center text-gray-500">Chargement...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SITE PRINCIPAL -->
+        <div id="main-site" class="hidden-element relative">
+            
+            <!-- NAVBAR FIXE (Masquée par défaut) -->
+            <nav id="main-navbar" class="fixed top-0 left-0 w-full z-50 bg-white/85 backdrop-blur-md border-b border-pink-100 shadow-sm transition-all duration-700 ease-out opacity-0 pointer-events-none -translate-y-full">
+                <div class="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between font-sans">
+                    <a href="#" onclick="window.scrollTo(0,0);" class="font-serif font-bold text-terracotta text-xl tracking-widest uppercase hidden sm:block flex-shrink-0">C & L</a>
+                    
+                    <div class="flex gap-4 md:gap-8 text-[10px] md:text-sm font-bold uppercase tracking-wider text-ink items-center flex-1 justify-center">
+                        <a href="#elleaditoui" class="hover:text-terracotta transition-colors hidden md:block">L'Événement</a>
+                        <a href="#programme" class="hover:text-terracotta transition-colors">Programme</a>
+                        <a href="#rsvp" class="hover:text-terracotta transition-colors">RSVP</a>
+                        <a href="#contacts" class="hover:text-terracotta transition-colors">Contacts</a>
+                    </div>
+                    
+                    <button onclick="location.reload()" class="text-[9px] md:text-xs font-bold uppercase tracking-widest text-white bg-terracotta px-3 py-2 rounded hover:bg-opacity-90 transition-colors shadow-sm flex-shrink-0">
+                        Changer d'invitation
+                    </button>
+                </div>
+            </nav>
+
+            <header class="min-h-screen flex flex-col items-center justify-center px-6 py-20 relative pt-32">
+                <div class="z-10 text-center w-full max-w-4xl flex flex-col items-center glass-panel-pastel p-12 rounded-3xl shadow-xl">
+                    <!-- Ajout de l'ID main-logo pour swap Easter Egg -->
+                    <img id="main-logo" src="logo_without_bg.png" alt="Logo Clémence & Lucas" class="gsap-hero w-48 md:w-64 h-auto mb-12 object-contain drop-shadow-md" onerror="this.src='https://placehold.co/400x400/F9EBEA/4A403A?text=Logo+C%26L'">
+                    <h2 id="personalized-welcome" class="gsap-hero text-xl md:text-2xl font-serif italic mb-2 text-gray-600"></h2>
+                    
+                    <div class="gsap-hero mt-8 mb-4">
+                        <p class="text-sm uppercase tracking-[0.2em] text-gray-500 mb-4">Grattez pour découvrir la date</p>
+                        <div class="scratch-container shadow-lg rounded-xl overflow-hidden">
+                            <div id="date-secrete" class="scratch-text" style="opacity: 0;">10 . 04 . 2027</div>
+                            <canvas id="scratch-canvas" width="300" height="100"></canvas>
+                        </div>
+                    </div>
+
+                    <a href="#elleaditoui" id="scroll-arrow" class="gsap-hero flex flex-col items-center gap-2 mt-16 opacity-0 transition-opacity duration-1000 text-terracotta pointer-events-none">
+                        <span class="text-xs uppercase tracking-widest">Découvrir</span>
+                        <svg class="w-6 h-6 animate-bounce mt-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    </a>
+                </div>
+            </header>
+
+            <section id="elleaditoui" class="py-24 px-6 scroll-mt-20">
+                <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-16 glass-panel p-8 md:p-12 rounded-3xl shadow-lg">
+                    <div class="w-full md:w-1/2 flex justify-center gsap-fade">
+                        <div class="polaroid max-w-sm rounded-lg">
+                            <img src="clem.JPEG" alt="Elle a dit oui !" class="w-full h-auto object-cover rounded" onerror="this.src='https://placehold.co/400x500/FDFBF7/4A403A?text=Photo+Fian%C3%A7ailles'">
+                            <p class="font-serif text-2xl text-center mt-4 italic text-terracotta">Elle a dit OUI !</p>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2 text-center md:text-left gsap-fade">
+                        <h2 class="font-serif text-4xl md:text-5xl mb-6 text-ink">Le compte à rebours est lancé...</h2>
+                        <p class="text-gray-600 font-sans leading-relaxed mb-10">
+                            Nous <span class="secret-char">a</span>vons tellement hâte de <span class="secret-char">p</span>artager ce moment inoubliable avec vous. <span class="secret-char">P</span>réparez-vous à célébr<span class="secret-char">e</span>r notre amour entourés de nos proches, dans un <span class="secret-char">l</span>ieu magique.
+                        </p>
+                        <div id="countdown" class="flex gap-4 md:gap-6 justify-center md:justify-start font-serif">
+                            <div class="flex flex-col items-center bg-pastelPink p-4 rounded-xl min-w-[80px] shadow-sm">
+                                <span id="cd-days" class="text-3xl md:text-4xl font-bold text-terracotta">--</span>
+                                <span class="text-[10px] uppercase tracking-widest mt-1 font-sans text-gray-500">Jours</span>
+                            </div>
+                            <div class="flex flex-col items-center bg-pastelYellow p-4 rounded-xl min-w-[80px] shadow-sm">
+                                <span id="cd-hours" class="text-3xl md:text-4xl font-bold text-amber-600">--</span>
+                                <span class="text-[10px] uppercase tracking-widest mt-1 font-sans text-gray-500">Heures</span>
+                            </div>
+                            <div class="flex flex-col items-center bg-pastelGreen p-4 rounded-xl min-w-[80px] shadow-sm">
+                                <span id="cd-minutes" class="text-3xl md:text-4xl font-bold text-emerald-600">--</span>
+                                <span class="text-[10px] uppercase tracking-widest mt-1 font-sans text-gray-500">Min</span>
+                            </div>
+                            <div class="flex flex-col items-center bg-pastelBlue p-4 rounded-xl min-w-[80px] shadow-sm">
+                                <span id="cd-seconds" class="text-3xl md:text-4xl font-bold text-sky-600">--</span>
+                                <span class="text-[10px] uppercase tracking-widest mt-1 font-sans text-gray-500">Sec</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="programme" class="py-24 px-6 scroll-mt-20">
+                <div class="max-w-5xl mx-auto glass-panel p-8 md:p-12 rounded-3xl shadow-lg">
+                    <div class="text-center mb-16">
+                        <h2 class="gsap-fade font-serif text-4xl md:text-5xl text-ink">Le Programme</h2>
+                        <p class="text-gray-500 mt-4 font-sans">Cliquez sur une étape pour afficher le lieu exact.</p>
+                        <div class="w-12 h-px bg-terracotta mx-auto mt-6"></div>
+                    </div>
+
+                    <div class="max-w-3xl mx-auto flex flex-col gap-4 gsap-fade relative" id="timeline-container">      
+                        <!-- MAIRIE -->
+                        <button id="timeline-mairie" data-theme="mairie" onclick="changeMap('mairie', this)" class="timeline-btn flex items-stretch text-left border-[2px] border-pink-200 bg-white rounded-xl overflow-hidden hover:border-terracotta transition-all duration-300 group shadow-sm">
+                            <div class="w-24 flex-shrink-0 flex flex-col items-center justify-center bg-pastelPink text-terracotta border-r border-pink-100 py-3 transition-colors">
+                                <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform">11h20</span>
+                                <span class="h-2 w-px bg-pink-200 my-1"></span>
+                                <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform">12h30</span>
+                            </div>
+                            <div class="flex-1 p-6 flex flex-col justify-center transition-colors duration-300">
+                                <h3 class="font-serif text-xl mb-1 uppercase tracking-wider text-ink">Mairie</h3>
+                                <p class="text-sm text-gray-600 font-sans">Mairie de Versailles</p>
+                            </div>
+                        </button>
+
+                        <!-- CÉRÉMONIE -->
+                        <button data-theme="cathedrale" onclick="changeMap('cathedrale', this)" class="timeline-btn flex items-stretch text-left border-[2px] border-yellow-200 bg-white rounded-xl overflow-hidden hover:border-amber-500 transition-all duration-300 group shadow-sm">
+                            <div class="w-24 flex-shrink-0 flex flex-col items-center justify-center bg-pastelYellow text-amber-700 border-r border-yellow-100 py-3 transition-colors">
+                                <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform">13h45</span>
+                                <span class="h-2 w-px bg-yellow-200 my-1"></span>
+                                <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform">15h15</span>
+                            </div>
+                            <div class="flex-1 p-6 flex flex-col justify-center transition-colors duration-300">
+                                <h3 class="font-serif text-xl mb-1 uppercase tracking-wider text-ink">Cérémonie</h3>
+                                <p class="text-sm text-gray-600 font-sans">Cathédrale Saint-Louis</p>
+                            </div>
+                        </button>
+
+                        <!-- DOMAINE -->
+                        <button id="timeline-reception" data-theme="domaine" onclick="changeMap('domaine', this)" class="timeline-btn flex items-stretch text-left border-[2px] border-green-200 bg-white rounded-xl overflow-hidden hover:border-emerald-500 transition-all duration-300 group shadow-sm">
+                            <div class="w-24 flex-shrink-0 flex flex-col items-center justify-center bg-pastelGreen text-emerald-700 border-r border-green-100 py-2 transition-colors">
+                                <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform leading-none">18h00</span>
+                                <span class="h-3 w-px bg-emerald-300 my-1"></span>
+                                <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform leading-none">20h00</span>
+                                <span class="h-3 w-px bg-emerald-300 my-1"></span>
+                                <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform leading-none">Tard</span>
+                            </div>
+                            <div class="flex-1 p-6 flex flex-col justify-center transition-colors duration-300">
+                                <h3 class="font-serif text-xl mb-1 uppercase tracking-wider text-ink">Réception</h3>
+                                <p class="text-sm text-gray-600 font-sans mb-1"><strong>18h-20h : Cocktail &emsp;|&emsp; 20h : Dîner jusqu'au bout de la nuit</strong></p>
+                                <p class="text-sm text-gray-600 font-sans">Domaine de Vaujoly</p>
+                            </div>
+                        </button>
+
+                        <!-- BLOC SECRET -->
+                        <button id="timeline-secret" data-theme="secret" onclick="changeMap('secret', this)" class="timeline-btn hidden-element flex items-stretch text-left border-[2px] border-red-900 bg-black rounded-xl overflow-hidden hover:border-red-500 transition-all duration-300 group shadow-sm">
+                            <div class="w-24 flex-shrink-0 flex flex-col items-center justify-center border-r border-red-900 py-2 bg-red-950">
+                                <span class="text-[10px] uppercase font-bold text-red-500 mb-1">Nuit</span>
+                                <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform text-red-600">??h??</span>
+                            </div>
+                            <div class="flex-1 p-6">
+                                <h3 class="font-serif text-xl mb-1 uppercase tracking-wider text-red-600">After Secret</h3>
+                                <p class="text-sm text-gray-400 font-sans">Coordonnées classifiées. Trouvez l'appel.</p>
+                            </div>
+                        </button>
+
+                        <!-- BLOC BRUNCH -->
+                        <button id="timeline-brunch" data-theme="brunch" onclick="changeMap('domaine', this)" class="timeline-btn flex items-stretch text-left border-[2px] border-blue-200 bg-white rounded-xl overflow-hidden hover:border-sky-500 transition-all duration-300 group shadow-sm">
+                            <div class="w-24 flex-shrink-0 flex flex-col items-center justify-center bg-pastelBlue text-sky-700 border-r border-blue-100 py-3 transition-colors">
+                                <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform">11h00</span>
+                                <span class="h-2 w-px bg-blue-200 my-1"></span>
+                                <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform">15h00</span>
+                            </div>
+                            <div class="flex-1 p-6 flex flex-col justify-center transition-colors duration-300">
+                                <h3 class="font-serif text-xl mb-1 uppercase tracking-wider text-ink">Brunch (Dimanche)</h3>
+                                <p class="text-sm text-gray-600 font-sans">Domaine de Vaujoly (Chambres dispo de 18h à 11h)</p>
+                            </div>
+                        </button>
+
+                        <!-- MAP CONTAINER -->
+                        <div id="map-container" class="hidden-element w-full h-[300px] md:h-[400px] bg-white border-[3px] border-pink-200 rounded-2xl p-2 relative overflow-hidden shadow-lg transition-all duration-500 my-2">
+                            <div class="w-full h-full bg-gray-100 relative rounded-xl overflow-hidden flex items-center justify-center">
+                                <div id="secret-hud" class="hidden-element absolute top-4 left-4 bg-black/90 text-red-500 p-4 border border-red-500 font-mono text-xs z-10 shadow-[0_0_15px_rgba(239,68,68,0.5)]">
+                                    > CONNEXION SÉCURISÉE ÉTABLIE...<br>
+                                    > LOCALISATION DE LA CIBLE :<br>
+                                    <span class="text-sm font-bold mt-2 block">> LAT: 0.6568</span>
+                                    <span class="text-sm font-bold">> LNG: -11.329</span><br>
+                                </div>
+                                <div id="map-room-badge" class="hidden-element absolute top-4 left-4 bg-black/80 backdrop-blur-md text-white px-4 py-2 rounded-xl font-mono text-xs z-20 shadow-lg border border-white/20">
+                                </div>
+                                <iframe id="gmap-iframe" class="hidden-element absolute inset-0 w-full h-full border-0 z-0 opacity-0 pointer-events-none" src="" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="rsvp" class="py-24 px-6 scroll-mt-20">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="gsap-fade font-serif text-4xl md:text-5xl mb-4 text-ink">Votre RSVP</h2>
+                    
+                    <div class="gsap-fade glass-panel border border-pink-100 rounded-2xl p-8 md:p-12 shadow-sm text-left">
+                        <form id="rsvp-step-2" onsubmit="handleFormSubmit(event)">
+                        <div id="form-alert-container"></div>
+                        <div id="family-members-container" class="space-y-6"></div>
+                            <div class="mt-8 border-t border-pink-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                                <button id="add-companion-btn" type="button" onclick="addFamilyMember('', '', currentGuestRights)" class="text-xs uppercase tracking-widest font-bold text-terracotta border border-terracotta rounded-lg px-6 py-3 hover:bg-terracotta hover:text-white transition-colors flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                    Ajouter un accompagnant
+                                </button>
+                                <button type="submit" class="bg-terracotta text-white rounded-lg px-8 py-3 uppercase tracking-widest text-sm font-bold hover:bg-opacity-90 transition-colors w-full md:w-auto shadow-md">
+                                    Confirmer
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div id="success-message" class="hidden-element text-center py-12">
+                            <svg class="w-16 h-16 text-emerald-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            <h3 class="font-serif text-3xl mb-2 text-ink">Merci !</h3>
+                            <p class="text-gray-600 mb-2">Vos informations ont bien été enregistrées.</p>
+                            <!-- Zone dynamique pour l'accompagnant -->
+                            <div id="success-extra-text" class="text-sm text-gray-600 mt-4 font-sans"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contacts" class="py-24 px-2 md:px-6 scroll-mt-20 overflow-hidden">
+                <div class="max-w-6xl mx-auto glass-panel p-4 md:p-12 rounded-3xl shadow-lg text-center">
+                    <h2 class="gsap-fade font-serif text-3xl md:text-5xl text-ink mb-2 md:mb-4">Contacts</h2>
+                    <p class="text-xs md:text-base text-gray-500 mb-8 md:mb-12 font-sans gsap-fade">En cas de besoin, n'hésitez pas à nous contacter.</p>
+
+                    <div class="relative flex flex-col items-center gsap-fade w-full">
+                        
+                        <!-- Niveau 1 : Les Mariés (Forcés sur la même ligne) -->
+                        <div class="flex flex-row justify-center gap-2 md:gap-6 relative z-10 w-full">
+                            <div class="bg-white/80 border border-pink-200 rounded-xl md:rounded-2xl p-3 md:p-6 shadow-sm w-[48%] md:w-56 hover:border-terracotta transition-colors">
+                                <h3 class="font-serif text-base md:text-2xl text-terracotta mb-1 md:mb-2 truncate">Clémence</h3>
+                                <p class="font-sans text-[10px] sm:text-xs md:text-lg text-gray-700 font-bold whitespace-nowrap tracking-tighter md:tracking-normal">06 08 35 71 47</p>
+                                <p class="text-[8px] md:text-[10px] text-gray-400 mt-1 md:mt-2 uppercase tracking-widest">La Mariée</p>
+                            </div>
+                            <div class="bg-white/80 border border-pink-200 rounded-xl md:rounded-2xl p-3 md:p-6 shadow-sm w-[48%] md:w-56 hover:border-terracotta transition-colors">
+                                <h3 class="font-serif text-base md:text-2xl text-terracotta mb-1 md:mb-2 truncate">Lucas</h3>
+                                <p class="font-sans text-[10px] sm:text-xs md:text-lg text-gray-700 font-bold whitespace-nowrap tracking-tighter md:tracking-normal">07 55 62 45 60</p>
+                                <p class="text-[8px] md:text-[10px] text-gray-400 mt-1 md:mt-2 uppercase tracking-widest">Le Marié</p>
+                            </div>
+                        </div>
+
+                        <!-- Connecteur central (Ligne verticale descendante) -->
+                        <div class="w-px h-6 md:h-8 bg-pink-300 relative z-0 mx-auto"></div>
+                        
+                        <!-- Barre Horizontale mathématiquement parfaite (Visible sur mobile ET bureau) -->
+                        <!-- Sur mobile gap-2 (8px) -> calc(50% + 4px). Sur bureau gap-16 (64px) -> calc(50% + 32px) -->
+                        <div class="w-[calc(50%+4px)] md:w-[calc(50%+32px)] h-px bg-pink-300 relative z-0 mx-auto">
+                            <!-- Lignes descendantes vers les parents -->
+                            <div class="absolute left-0 top-0 w-px h-6 md:h-8 bg-pink-300"></div>
+                            <div class="absolute right-0 top-0 w-px h-6 md:h-8 bg-pink-300"></div>
+                        </div>
+                        
+                        <!-- Espace de séparation vertical -->
+                        <div class="w-full h-6 md:h-8"></div>
+
+                        <!-- Niveau 2 : Les Parents (Grille stricte 2 colonnes forcée) -->
+                        <div class="grid grid-cols-2 gap-2 md:gap-16 w-full max-w-4xl relative z-10">
+                            
+                            <!-- Parents Clémence -->
+                            <div class="flex flex-col items-center bg-pastelPink/30 border border-pink-100 p-2 md:p-6 rounded-xl md:rounded-2xl shadow-sm">
+                                <h4 class="font-serif text-[8px] md:text-sm uppercase tracking-widest text-terracotta mb-3 md:mb-6 text-center leading-tight">
+                                    Parents<br class="md:hidden"><span class="hidden md:inline"> de </span>Clémence
+                                </h4>
+                                <!-- Flex-row forcé pour garder les parents côte à côte -->
+                                <div class="flex flex-row gap-1 md:gap-4 justify-center w-full">
+                                    <div class="bg-white/90 border border-pink-200 rounded-md md:rounded-xl p-2 md:p-4 shadow-sm w-1/2 overflow-hidden">
+                                        <h3 class="font-serif text-[10px] md:text-xl text-ink truncate">Christine</h3>
+                                        <p class="font-sans text-[7px] sm:text-[9px] md:text-sm text-gray-600 mt-1 whitespace-nowrap tracking-tighter md:tracking-normal">06 82 42 68 96</p>
+                                    </div>
+                                    <div class="bg-white/90 border border-pink-200 rounded-md md:rounded-xl p-2 md:p-4 shadow-sm w-1/2 overflow-hidden">
+                                        <h3 class="font-serif text-[10px] md:text-xl text-ink truncate">Alain</h3>
+                                        <p class="font-sans text-[7px] sm:text-[9px] md:text-sm text-gray-600 mt-1 whitespace-nowrap tracking-tighter md:tracking-normal">06 47 27 96 81</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Parents Lucas -->
+                            <div class="flex flex-col items-center bg-pastelPink/30 border border-pink-100 p-2 md:p-6 rounded-xl md:rounded-2xl shadow-sm">
+                                <h4 class="font-serif text-[8px] md:text-sm uppercase tracking-widest text-terracotta mb-3 md:mb-6 text-center leading-tight">
+                                    Parents<br class="md:hidden"><span class="hidden md:inline"> de </span>Lucas
+                                </h4>
+                                <!-- Flex-row forcé pour garder les parents côte à côte -->
+                                <div class="flex flex-row gap-1 md:gap-4 justify-center w-full">
+                                    <div class="bg-white/90 border border-pink-200 rounded-md md:rounded-xl p-2 md:p-4 shadow-sm w-1/2 overflow-hidden">
+                                        <h3 class="font-serif text-[10px] md:text-xl text-ink truncate">Delphine</h3>
+                                        <p class="font-sans text-[7px] sm:text-[9px] md:text-sm text-gray-600 mt-1 whitespace-nowrap tracking-tighter md:tracking-normal">07 61 22 22 68</p>
+                                    </div>
+                                    <div class="bg-white/90 border border-pink-200 rounded-md md:rounded-xl p-2 md:p-4 shadow-sm w-1/2 overflow-hidden">
+                                        <h3 class="font-serif text-[10px] md:text-xl text-ink truncate">Lionel</h3>
+                                        <p class="font-sans text-[7px] sm:text-[9px] md:text-sm text-gray-600 mt-1 whitespace-nowrap tracking-tighter md:tracking-normal">06 72 88 80 89</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== INTERFACE CHAT ESCAPE GAME ==================== -->
+        <div id="escape-chat-modal" class="hidden-element fixed inset-0 z-[10000] bg-black/95 flex items-center justify-center p-4">
+            
+            <div id="ringing-screen" class="text-center w-full max-w-sm">
+                <div class="animate-pulse text-red-500 mb-8">
+                    <svg class="w-20 h-20 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                </div>
+                <h3 class="text-red-500 font-mono text-xl mb-2">APPEL ENTRANT...</h3>
+                <p class="text-red-900 font-mono mb-12 uppercase tracking-widest">Numéro Inconnu</p>
+                <button type="button" onclick="answerCall()" class="bg-red-600 text-black font-bold uppercase tracking-widest px-8 py-4 rounded-full hover:bg-red-500 transition-colors shadow-[0_0_20px_rgba(239,68,68,0.5)]">
+                    Décrocher
+                </button>
+            </div>
+
+            <div id="chat-screen" class="hidden-element w-full max-w-md bg-[#0a0a0a] border border-red-900 h-[80vh] flex flex-col font-mono relative rounded-xl overflow-hidden shadow-2xl">
+                <div class="p-4 border-b border-red-900 bg-black text-red-500 flex items-center gap-3 shadow-md">
+                    <div class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                    <span class="font-bold tracking-widest">CONNEXION CHIFFRÉE</span>
+                </div>
+                
+                <div id="chat-messages" class="flex-1 p-4 overflow-y-auto flex flex-col gap-4 pb-20">
+                </div>
+                
+                <div id="chat-input-area" class="hidden-element p-4 bg-black flex gap-2 border-t border-red-900">
+                    <input type="text" id="escape-code-input" placeholder="Saisir le code..." class="flex-1 bg-black border border-red-900 text-red-500 px-4 py-2 focus:outline-none focus:border-red-500 uppercase rounded">
+                    <button type="button" onclick="verifyEscapeCode()" class="bg-red-900 text-black px-4 py-2 font-bold hover:bg-red-600 transition-colors rounded">ENVOYER</button>
+                </div>
+
+                <div class="p-4 bg-black border-t border-red-900 flex justify-center mt-auto">
+                    <button type="button" onclick="initiateSelfDestruct()" class="bg-red-900/20 text-red-500 border border-red-600 px-6 py-3 font-bold hover:bg-red-600 hover:text-black transition-colors uppercase tracking-widest w-full rounded">
+                        [ Raccrocher ]
+                    </button>
+                </div>
+            </div>
+
+            <div id="video-payload-screen" class="hidden-element w-full max-w-md bg-black border-2 border-red-900 p-4 flex flex-col items-center justify-center font-mono rounded-xl shadow-2xl">
+                <h3 class="text-red-500 text-xl mb-4 animate-pulse">TRANSMISSION SÉCURISÉE</h3>
+                
+                <video controls playsinline preload="auto" class="w-full h-auto grayscale contrast-125 border border-red-500 mb-6 rounded">
+                    <source src="ma_video.mp4" type="video/mp4">
+                    Votre navigateur ne peut pas lire la vidéo.
+                </video>
+
+                <div class="w-full text-red-500 text-sm border-t border-red-900 pt-4">
+                    <p class="mb-2">> DÉCRYPTAGE DU MESSAGE...</p>
+                    <p class="italic text-red-400">"Parfait, tu as réussi. L'adresse exacte de l'after est la chambre XXX. Trouve l'objet caché et ramène-le moi."</p>
+                </div>
+
+                <button type="button" onclick="initiateSelfDestruct()" class="mt-8 bg-red-600 text-black px-8 py-4 font-bold hover:bg-red-500 transition-colors uppercase tracking-widest w-full shadow-[0_0_15px_rgba(239,68,68,0.5)] rounded">
+                    Détruire les preuves
+                </button>
+            </div>
+        </div>
+    </div> 
+
+    <script>
+        let globalGuestDatabase = {};
+        let currentGuestRights = null;
+        let guestCount = 0;
+        let guestFirstName = "";
+        let escapeStep = 1;
+
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzSO4EuNZGE9K6OtxJxag3KVJ7c89RmdtvnU2ND7VG1UW6QwldDsPorHJyGSQauD27fRg/exec';
+
+        function normalizeString(str) {
+            if (str === null || str === undefined) return "";
+            return str.toString().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+        }
+
+        async function unlockSite() {
+            const firstInput = document.getElementById('login-first').value;
+            const last = document.getElementById('login-last').value;
+            const errorDiv = document.getElementById('login-error');
+            const submitBtn = document.querySelector('#gatekeeper button[type="submit"]');
+            
+            if(!firstInput || !last) {
+                errorDiv.innerText = "Veuillez remplir votre prénom et nom.";
+                errorDiv.classList.remove('hidden-element');
+                return;
+            }
+
+            const cleanFirst = normalizeString(firstInput);
+            const cleanLast = normalizeString(last);
+
+            // CAS SPÉCIAL DES DEUX DELPHINE DUCLOS (S'active si c'est "delphine duclos" saisi à l'écran)
+            if (cleanFirst === 'delphine' && cleanLast === 'duclos') {
+                // On vérifie si on n'a pas déjà fait un choix stocké temporairement
+                if (!window.delphineChoice) {
+                    document.getElementById('delphine-modal').classList.remove('hidden-element');
+                    return; 
+                } else {
+                    // Si un choix a été fait, on utilise la variante choisie ("daphine" ou "delphine")
+                    varUsed = window.delphineChoice;
+                }
+            } else {
+                varUsed = cleanFirst;
+            }
+
+            submitBtn.innerText = "Connexion...";
+            submitBtn.disabled = true;
+
+            try {
+                // On désactive le cache temporairement pour être sûr de lire la bonne ligne Excel pendant tes tests
+                const response = await fetch(GOOGLE_SCRIPT_URL);
+                const jsonResp = await response.json();
+                window.globalChambresData = jsonResp.chambres || [];
+                
+                // On extrait les réponses de la feuille "Reponses"
+                const rows = jsonResp.reponses;
+                if(!Array.isArray(rows)) throw new Error("Erreur de format de données Google Apps Script.");
+                
+                for(let i = 1; i < rows.length; i++) {
+                    const r = rows[i];
+                    if (!r[0] || r[0].toString().trim() === "" || r[0].toString().trim() === "-") continue;
+                    
+                    const key = normalizeString(r[0]) + " " + normalizeString(r[1]);
+                    const checkOui = (val) => normalizeString(val).includes('oui');
+                    
+                    globalGuestDatabase[key] = {
+                        prenom: r[0], nom: r[1], telephone: r[2] || 'No phone',
+                        isMairie: checkOui(r[3]), 
+                        isCocktail: checkOui(r[4]), 
+                        isRepas: checkOui(r[5]),
+                        isDormir: checkOui(r[6]), 
+                        isBrunch: checkOui(r[7]),
+                        numeroChambre: r[8] || '', 
+                        dateReponse: r[9] || '',
+                        repCocktail: r[10] || '', 
+                        repRepas: r[11] || '', 
+                        repBrunch: r[12] || '', 
+                        repDormir: r[13] || '',
+                        allergies: r[14] || ''
+                    };
+                }
+
+                globalGuestDatabase[normalizeString("donald trump")] = { prenom: "Donald", nom: "Trump", isAdmin: true };
+                globalGuestDatabase[normalizeString("john cena")] = { prenom: "John", nom: "Cena", isEasterEgg: true };
+
+                // On cherche dans la base avec le prénom ciblé (soit "daphine", soit "delphine")
+                const fullName = varUsed + " " + cleanLast;
+                
+                if(globalGuestDatabase[fullName]) {
+                    currentGuestRights = globalGuestDatabase[fullName];
+                    
+                    errorDiv.classList.add('hidden-element');
+                    document.getElementById('gatekeeper').classList.add('hidden-element');
+                    window.scrollTo(0, 0);
+
+                    initFloatingHead();
+
+                    if (currentGuestRights.isAdmin) {
+                        document.body.classList.add('geek-mode');
+                        document.getElementById('admin-dashboard').classList.remove('hidden-element');
+                        loadAdminDashboard(rows); // <-- Utilise bien loadAdminDashboard ici
+                        return; 
+                    }
+
+                    try {
+                        window.isEasterEggActive = currentGuestRights.isEasterEgg || false;
+                        
+                        // ACTIVATION DU MODE MYSTÈRE
+                        if (window.isEasterEggActive) {
+                            document.body.classList.add('easter-egg-mode');
+                            document.getElementById('main-logo').src = 'logo_white.png';
+                            // Cacher le bouton "Ajouter un accompagnant"
+                            const btnAddCompanion = document.getElementById('add-companion-btn');
+                            if(btnAddCompanion) btnAddCompanion.classList.add('hidden-element');
+                        }
+
+                        document.getElementById('main-site').classList.remove('hidden-element');
+                        document.body.classList.add('no-scroll');
+                        document.getElementById('main-site').classList.remove('hidden-element');
+                        document.body.classList.add('no-scroll');
+
+                        const realFirstName = currentGuestRights.prenom || capitalizedFirst;
+                        const formattedFirst = realFirstName.charAt(0).toUpperCase() + realFirstName.slice(1).toLowerCase();
+                        guestFirstName = formattedFirst; 
+
+                        document.getElementById('personalized-welcome').innerText = `Bonjour ${formattedFirst},`;
+                        
+                        const btnMairie = document.getElementById('timeline-mairie');
+                        if(btnMairie && !currentGuestRights.isMairie) btnMairie.classList.add('hidden-element');
+                        
+                        const btnBrunch = document.getElementById('timeline-brunch');
+                        if(btnBrunch && !currentGuestRights.isBrunch) btnBrunch.classList.add('hidden-element');
+
+                        const receptionBtn = document.getElementById('timeline-reception');
+                        if (receptionBtn) {
+                            // On s'assure de réinitialiser les classes cachées au cas où
+                            receptionBtn.classList.remove('hidden-element');
+
+                            if (currentGuestRights.isCocktail === true && currentGuestRights.isRepas === false) {
+                                // CAS 1 : Uniquement invité au Cocktail (18h)
+                                receptionBtn.innerHTML = `
+                                    <div class="w-24 flex-shrink-0 flex items-center justify-center bg-pastelGreen text-emerald-700 border-r border-green-100 transition-colors">
+                                        <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform">18h00</span>
+                                    </div>
+                                    <div class="flex-1 p-6 flex flex-col justify-center transition-colors duration-300">
+                                        <h3 class="font-serif text-xl mb-1 uppercase tracking-wider text-ink">Cocktail</h3>
+                                        <p class="text-sm text-gray-600 font-sans mb-1"><strong>18h : Vin d'honneur</strong></p>
+                                        <p class="text-sm text-gray-600 font-sans">Domaine de Vaujoly</p>
+                                    </div>
+                                `;
+                            } else if (currentGuestRights.isCocktail === false && currentGuestRights.isRepas === true) {
+                                // CAS 2 : Uniquement invité au Dîner (20h)
+                                receptionBtn.innerHTML = `
+                                    <div class="w-24 flex-shrink-0 flex flex-col items-center justify-center bg-pastelGreen text-emerald-700 border-r border-green-100 py-3 transition-colors">
+                                        <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform leading-none">20h00</span>
+                                        <span class="h-3 w-px bg-emerald-300 my-1"></span>
+                                        <span class="font-serif text-base md:text-xl font-bold group-hover:scale-110 transition-transform leading-none text-emerald-800">Tard</span>
+                                    </div>
+                                    <div class="flex-1 p-6 flex flex-col justify-center transition-colors duration-300">
+                                        <h3 class="font-serif text-xl mb-1 uppercase tracking-wider text-ink">Dîner</h3>
+                                        <p class="text-sm text-gray-600 font-sans mb-1"><strong>20h : Dîner jusqu'au bout de la nuit</strong></p>
+                                        <p class="text-sm text-gray-600 font-sans">Domaine de Vaujoly</p>
+                                    </div>
+                                `;
+                            } else if (currentGuestRights.isCocktail === true && currentGuestRights.isRepas === true) {
+                                // CAS 3 : Invité aux deux (Cocktail à 18h ET Dîner à 20h)
+                                receptionBtn.innerHTML = `
+                                    <div class="w-24 flex-shrink-0 flex flex-col items-center justify-center bg-pastelGreen text-emerald-700 border-r border-green-100 py-3 transition-colors">
+                                        <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform leading-none">18h00</span>
+                                        <span class="h-3 w-px bg-emerald-300 my-1"></span>
+                                        <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform leading-none">20h00</span>
+                                        <span class="h-3 w-px bg-emerald-300 my-1"></span>
+                                        <span class="font-serif text-base md:text-xl font-bold group-hover:scale-110 transition-transform leading-none text-emerald-800">Tard</span>
+                                    </div>
+                                    <div class="flex-1 p-6 flex flex-col justify-center transition-colors duration-300">
+                                        <h3 class="font-serif text-xl mb-1 uppercase tracking-wider text-ink">Réception</h3>
+                                        <p class="text-sm text-gray-600 font-sans mb-1"><strong>18h-20h : Cocktail &emsp;|&emsp; 20h : Dîner jusqu'au bout de la nuit</strong></p>
+                                        <p class="text-sm text-gray-600 font-sans">Domaine de Vaujoly</p>
+                                    </div>
+                                `;
+                            } else {
+                                // CAS 4 : Ni l'un ni l'autre -> on cache le bouton
+                                receptionBtn.classList.add('hidden-element');
+                            }
+                        }
+
+                        if(currentGuestRights.isDormir && currentGuestRights.repDormir && normalizeString(currentGuestRights.repDormir) === 'sur place') {
+                            const programmeContainer = document.getElementById('timeline-container');
+                            let batimentNom = "";
+                            if (window.globalChambresData) {
+                                for (let i = 1; i < window.globalChambresData.length; i++) {
+                                    if (window.globalChambresData[i][1].toString().trim().toLowerCase() === currentGuestRights.numeroChambre.toString().trim().toLowerCase()) {
+                                        batimentNom = window.globalChambresData[i][0]; // Colonne 0 = Bâtiment
+                                        break;
+                                    }
+                                }
+                            }
+
+                            // --- GESTION CHAMBRE ATTRIBUÉE OU EN COURS ---
+                            const hasRoom = currentGuestRights.numeroChambre && currentGuestRights.numeroChambre.toString().trim() !== "";
+                            const texteChambreComplet = hasRoom 
+                                ? (batimentNom ? `Chambre ${currentGuestRights.numeroChambre} - ${batimentNom}` : `Chambre ${currentGuestRights.numeroChambre}`)
+                                : `Attribution en cours`;
+
+                            const actionBtnHtml = hasRoom 
+                                ? `<div onclick="event.stopPropagation(); openRoomModal('${currentGuestRights.numeroChambre}')" class="cursor-pointer text-[10px] uppercase tracking-widest font-bold text-indigo-700 border border-indigo-300 bg-indigo-50 rounded-md px-3 py-2 hover:bg-indigo-600 hover:text-white transition-colors shadow-sm relative z-10 whitespace-nowrap">Détails chambre</div>`
+                                : `<div onclick="event.stopPropagation(); openAlertEmailModal()" class="cursor-pointer text-[10px] uppercase tracking-widest font-bold text-indigo-700 border border-indigo-300 bg-indigo-50 rounded-md px-3 py-2 hover:bg-indigo-600 hover:text-white transition-colors shadow-sm relative z-10 whitespace-nowrap">M'alerter</div>`;
+
+                            const onClickAttr = hasRoom ? `openDodoMap('${currentGuestRights.numeroChambre}', this)` : `this.classList.toggle('active')`;
+
+                            const btnDodo = `
+                                <button id="timeline-dodo" data-theme="dodo" onclick="${onClickAttr}" class="timeline-btn flex items-stretch text-left border-[2px] border-indigo-200 bg-white rounded-xl overflow-hidden hover:border-indigo-500 transition-all duration-300 group shadow-sm w-full relative">
+                                    <div class="w-24 flex-shrink-0 flex flex-col items-center justify-center bg-indigo-50 text-indigo-700 border-r border-indigo-100 py-4 transition-colors">
+                                        <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform">Nuit</span>
+                                    </div>
+                                    <div class="flex-1 p-5 md:p-6 flex flex-col justify-center transition-colors duration-300">
+                                        <div class="flex justify-between items-center w-full gap-2">
+                                            <div>
+                                                <h3 class="font-serif text-xl uppercase tracking-wider text-ink mb-1">Votre Hébergement</h3>
+                                                <p class="text-sm text-gray-600 font-sans m-0"><strong>${texteChambreComplet}</strong> (⚠️Chambre disponible de 18h à 11h)</p>
+                                            </div>
+                                            ${actionBtnHtml}
+                                        </div>
+                                    </div>
+                                </button>
+                            `;
+                            
+                            if(btnBrunch && !btnBrunch.classList.contains('hidden-element')) {
+                                btnBrunch.insertAdjacentHTML('beforebegin', btnDodo);
+                            } else if (programmeContainer) {
+                                programmeContainer.insertAdjacentHTML('beforeend', btnDodo);
+                            }
+                        }
+                        const rsvpSubmitBtn = document.querySelector('#rsvp-step-2 button[type="submit"]');
+                        const formAlertContainer = document.getElementById('form-alert-container');
+
+                        if (currentGuestRights.dateReponse && currentGuestRights.dateReponse !== "") {
+                            if(rsvpSubmitBtn) rsvpSubmitBtn.innerText = "Modifier ma réponse";
+                            
+                            if (formAlertContainer) {
+                                const dateObj = new Date(currentGuestRights.dateReponse);
+                                const dateStr = !isNaN(dateObj.getTime()) ? ` le ${dateObj.toLocaleDateString()}` : "";
+
+                                formAlertContainer.innerHTML = `
+                                    <div class="mb-6 p-4 bg-amber-50 border border-amber-200 text-amber-800 rounded-xl text-sm font-bold text-center shadow-sm">
+                                        Salut ${formattedFirst}, tu as déjà répondu${dateStr}. En soumettant ce formulaire, tu mettras à jour tes choix !
+                                        <div class="mt-3">
+                                            <button type="button" onclick="openGuestRecapModal()" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-lg text-xs uppercase tracking-widest font-bold transition-colors shadow-sm">
+                                                Voir mes réponses
+                                            </button>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                        } else {
+                            if (formAlertContainer) formAlertContainer.innerHTML = "";
+                            if (rsvpSubmitBtn) rsvpSubmitBtn.innerText = "Confirmer";
+                        }
+
+                        // --- GESTION DES ALERTES : DEMANDES D'ACCOMPAGNANT ---
+                        if (!window.isEasterEggActive) {
+                            const demandesRows = jsonResp.demandes || [];
+                            let demandesAlertsHtml = '';
+                            
+                            for (let r = 1; r < demandesRows.length; r++) {
+                                const row = demandesRows[r];
+                                if (!row[0]) continue;
+                                
+                                const demandPrenom = row[0];
+                                const demandNom = row[1];
+                                const inviteMaster = row[15] || ''; // Colonne du "Demandé par"
+                                const statut = (row[17] || 'EN ATTENTE').toString().trim().toUpperCase(); // Colonne "Statut"
+
+                                // Si la demande a été faite par la personne actuellement connectée
+                                if (normalizeString(inviteMaster) === normalizeString(currentGuestRights.prenom)) {
+                                    let statusColor = "text-gray-500";
+                                    let statusText = "en attente";
+                                    let extraMessageHtml = '';
+                                    
+                                    if (statut.includes("ACCEPT")) {
+                                        statusColor = "text-emerald-500";
+                                        statusText = "acceptée";
+                                        extraMessageHtml = `<span class="text-xs text-emerald-600 font-bold mt-2 block">${demandPrenom} ${demandNom.toUpperCase()} possède désormais sa propre invitation !</span>`;
+                                    } else if (statut.includes("REFUS")) {
+                                        statusColor = "text-red-500";
+                                        statusText = "refusée";
+                                    } else {
+                                        extraMessageHtml = `<span class="text-xs text-gray-500 mt-2 block">Tu seras notifié(e) par email si le statut de la demande change.</span>`;
+                                    }
+
+                                    demandesAlertsHtml += `
+                                        <div class="mb-6 p-4 bg-white/80 border border-pink-200 rounded-xl text-sm text-center shadow-sm text-ink">
+                                            Ta demande d'ajout de l'accompagnant <strong>${demandPrenom} ${demandNom.toUpperCase()}</strong> a été <span class="font-bold uppercase tracking-widest ${statusColor}">${statusText}</span>.<br>
+                                            ${extraMessageHtml}
+                                        </div>
+                                    `;
+                                }
+                            }
+
+                            if (formAlertContainer && demandesAlertsHtml !== '') {
+                                formAlertContainer.innerHTML += demandesAlertsHtml;
+                            }
+                        }
+
+                        document.getElementById('family-members-container').innerHTML = '';
+                        guestCount = 0;
+                        addFamilyMember(currentGuestRights.prenom, currentGuestRights.nom.toUpperCase(), currentGuestRights);
+
+                        initScratchCard();
+                        initCountdown();
+                        initGSAPHero();
+
+                    } catch(internalError) {
+                        console.error("Erreur de rendu UI :", internalError);
+                        document.getElementById('gatekeeper').classList.remove('hidden-element');
+                        document.getElementById('main-site').classList.add('hidden-element');
+                        errorDiv.innerText = "Une erreur d'affichage est survenue.";
+                        errorDiv.classList.remove('hidden-element');
+                        submitBtn.innerText = "Accéder au site";
+                        submitBtn.disabled = false;
+                    }
+
+                } else {
+                    errorDiv.innerText = "Nous n'avons pas trouvé votre invitation dans le fichier. (Vérifiez l'orthographe de votre prénom et nom, ou contactez-nous si le problème persiste (tel: 07 55 62 45 60).)";
+                    errorDiv.classList.remove('hidden-element');
+                    submitBtn.innerText = "Accéder au site";
+                    submitBtn.disabled = false;
+                }
+            } catch(e) {
+                console.error(e);
+                document.getElementById('gatekeeper').classList.remove('hidden-element');
+                errorDiv.innerText = "Erreur de connexion au serveur.";
+                errorDiv.classList.remove('hidden-element');
+                submitBtn.innerText = "Accéder au site";
+                submitBtn.disabled = false;
+            }
+        }
+
+        async function supprimerRegime(prenom, nom) {
+            const confirmation = confirm(`Voulez-vous vraiment supprimer le régime spécial de ${prenom} ${nom} ? Cela inscrira "AUCUNE" à la place.`);
+            if (!confirmation) return;
+
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: "supprimer_regime", prenom: prenom, nom: nom })
+                });
+
+            } catch(err) {
+                console.error(err);
+                alert("Erreur lors de la suppression du régime.");
+            }
+        }
+
+        // Fonction déclenchée par les boutons de la modale Double Delphine
+        function selectDelphine(choix) {
+            document.getElementById('delphine-modal').classList.add('hidden-element');
+            window.delphineChoice = choix; // Stocke "daphine" ou "delphine"
+            unlockSite(); // Relance la connexion avec le choix validé
+        }
+
+        // SCINDAGE DES ANIMATIONS GSAP POUR LA SÉCURITÉ DU RENDU
+        function initGSAPHero() {
+            try {
+                gsap.from(".gsap-hero", { y: 30, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out" });
+            } catch (e) {
+                console.error("Hero animation failed", e);
+                document.querySelectorAll('.gsap-hero').forEach(el => el.style.opacity = 1);
+            }
+        }
+
+        function initScrollAnimations() {
+            try {
+                gsap.registerPlugin(ScrollTrigger);
+                gsap.utils.toArray('.gsap-fade').forEach(element => {
+                    gsap.from(element, { scrollTrigger: { trigger: element, start: "top 85%" }, y: 30, opacity: 0, duration: 0.8, ease: "power2.out" });
+                });
+                gsap.to(".bg-fixed-watermark", { yPercent: 10, ease: "none", scrollTrigger: { trigger: "#main-site", start: "top top", end: "bottom bottom", scrub: true }});
+            } catch (e) {
+                console.error("Scroll animation failed", e);
+                document.querySelectorAll('.gsap-fade').forEach(el => el.style.opacity = 1);
+            }
+        }
+
+        function initScratchCard() {
+            const canvas = document.getElementById('scratch-canvas');
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false, isRevealed = false;
+
+            ctx.fillStyle = window.isEasterEggActive ? '#333333' : '#D98880'; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            document.getElementById('date-secrete').style.opacity = '1';
+            
+            for(let i=0; i<500; i++) { 
+                ctx.fillStyle = Math.random() > 0.5 ? (window.isEasterEggActive ? '#444' : '#E09993') : (window.isEasterEggActive ? '#222' : '#C8766F'); 
+                ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 2, 2); 
+            }
+            ctx.lineJoin = "round"; ctx.lineCap = "round"; ctx.lineWidth = 25; ctx.globalCompositeOperation = "destination-out";
+
+            function getMousePos(e) { const rect = canvas.getBoundingClientRect(); return { x: (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left, y: (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top }; }
+            function scratch(e) { if (!isDrawing || isRevealed) return; e.preventDefault(); const pos = getMousePos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke(); checkReveal(); }
+            function startScratch(e) { if (isRevealed) return; isDrawing = true; const pos = getMousePos(e); ctx.beginPath(); ctx.moveTo(pos.x, pos.y); }
+            function stopScratch() { isDrawing = false; }
+            function checkReveal() {
+                const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+                let transparent = 0;
+                for (let i = 3; i < pixels.length; i += 4) { if (pixels[i] === 0) transparent++; }
+                if ((transparent / (pixels.length / 4)) * 100 > 45) {
+                    isRevealed = true;
+                    gsap.to(canvas, { opacity: 0, duration: 0.5, onComplete: () => {
+                        canvas.style.display = 'none';
+                        document.body.classList.remove('no-scroll'); 
+                        document.getElementById('scroll-arrow').style.opacity = '1';
+                        document.getElementById('scroll-arrow').classList.remove('pointer-events-none');
+                        
+                        const nav = document.getElementById('main-navbar');
+                        nav.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-full');
+
+                        triggerConfetti();
+                        
+                        // ON LANCE LES ANIMATIONS AU DÉFILEMENT ICI SEULEMENT (Sécurité Scroll)
+                        initScrollAnimations();
+                    }});
+                }
+            }
+            canvas.addEventListener('mousedown', startScratch); canvas.addEventListener('mousemove', scratch);
+            canvas.addEventListener('mouseup', stopScratch); canvas.addEventListener('mouseleave', stopScratch);
+            canvas.addEventListener('touchstart', startScratch, {passive: false}); canvas.addEventListener('touchmove', scratch, {passive: false}); canvas.addEventListener('touchend', stopScratch);
+        }
+        
+        function switchAdminTab(tabId) {
+            document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.add('hidden-element'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden-element');
+
+            document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+                btn.classList.remove('bg-terracotta', 'text-white');
+                btn.classList.add('bg-white/70', 'text-ink');
+            });
+            const activeBtn = document.getElementById('nav-' + tabId);
+            activeBtn.classList.remove('bg-white/70', 'text-ink');
+            activeBtn.classList.add('bg-terracotta', 'text-white');
+        }
+
+        let globalAdminRowsData = []; // Stockage brut pour le tri et le filtre
+        let globalDemandesData = [];
+
+
+        async function loadAdminDashboard(responseObj) {
+            let jsonResp = responseObj;
+            if (!jsonResp.reponses) {
+                const response = await fetch(GOOGLE_SCRIPT_URL);
+                jsonResp = await response.json();
+            }
+
+
+
+            const rows = jsonResp.reponses;
+            globalDemandesData = (jsonResp.demandes || []).slice(1);
+                        
+            if (!rows || rows.length <= 1) return;
+            
+            globalAdminRowsData = rows.slice(1).filter(row => row[0] && row[0].toString().trim() !== "" && row[0].toString().trim() !== "-");
+            
+            renderAdminTable(globalAdminRowsData);
+            renderAdminDemandes();
+            window.globalChambresData = jsonResp.chambres || [];
+            renderAdminChambresTab();
+            
+            let totalLignesExcel = globalAdminRowsData.length;
+            let totalReponses = 0;
+            let presentsSoiree = 0;
+            let totalAllergies = 0;
+            let regimesHtml = '';
+            let hebergementAnomaliesHtml = '';
+            let totalInvites = globalAdminRowsData.length;
+            let countMairie = 0, countCocktail = 0, countRepas = 0, countDormir = 0, countBrunch = 0;
+
+            let counts = {
+                repCocktail: { OUI: 0, NON: 0, PAS_REP: 0 },
+                repRepas: { OUI: 0, NON: 0, PAS_REP: 0 },
+                repBrunch: { OUI: 0, NON: 0, PAS_REP: 0 },
+                repDormir: { 'SUR PLACE': 0, 'AILLEURS': 0, 'DORS PAS': 0, 'PAS_REP': 0 }
+            };
+
+            globalAdminRowsData.forEach(row => {
+                const prenom = row[0] || '-';
+                const nom = row[1] || '-';
+                const isDormirPrevu = normalizeString(row[6]) === 'oui';
+                const dateRep = row[9];
+                const repCocktail = (row[10] || '').toString().trim().toUpperCase();
+                const repRepas = (row[11] || '').toString().trim().toUpperCase();
+                const repBrunch = (row[12] || '').toString().trim().toUpperCase();
+                const repDormir = (row[13] || '').toString().trim().toUpperCase();
+                const allergies = row[14] || '';
+
+                if (dateRep && dateRep !== "") totalReponses++;
+                if (repRepas === 'OUI') presentsSoiree++;
+                if (normalizeString(row[3]) === 'oui') countMairie++;
+                if (normalizeString(row[4]) === 'oui') countCocktail++;
+                if (normalizeString(row[5]) === 'oui') countRepas++;
+                if (normalizeString(row[6]) === 'oui') countDormir++;
+                if (normalizeString(row[7]) === 'oui') countBrunch++;
+                if (allergies && normalizeString(allergies) !== 'aucune' && normalizeString(allergies) !== 'ras' && allergies.trim() !== '') {
+                    totalAllergies++;
+                    regimesHtml += `
+                        <tr class="border-b border-gray-800 hover:bg-white/5 transition-colors">
+                            <td class="p-3 font-bold text-emerald-300">${prenom}</td>
+                            <td class="p-3 uppercase text-emerald-300">${nom}</td>
+                            <td class="p-3 text-amber-400 font-bold">${allergies}</td>
+                            <td class="p-3 text-center">
+                                <button onclick="supprimerRegime('${prenom.replace(/'/g, "\\'")}', '${nom.replace(/'/g, "\\'")}')" class="bg-red-900/40 border border-red-600 text-red-400 hover:bg-red-600 hover:text-black px-3 py-1 rounded font-bold transition-all text-xs uppercase">Supprimer</button>
+                            </td>
+                        </tr>
+                    `;
+                }
+
+                if (repCocktail === 'OUI') counts.repCocktail.OUI++;
+                else if (repCocktail === 'NON') counts.repCocktail.NON++;
+                else counts.repCocktail.PAS_REP++;
+
+                if (repRepas === 'OUI') counts.repRepas.OUI++;
+                else if (repRepas === 'NON') counts.repRepas.NON++;
+                else counts.repRepas.PAS_REP++;
+
+                if (repBrunch === 'OUI') counts.repBrunch.OUI++;
+                else if (repBrunch === 'NON') counts.repBrunch.NON++;
+                else counts.repBrunch.PAS_REP++;
+
+                if (repDormir.includes('SUR PLACE') || repDormir === 'OUI') counts.repDormir['SUR PLACE']++;
+                else if (repDormir.includes('AILLEURS')) counts.repDormir['AILLEURS']++;
+                else if (repDormir.includes('NON')) counts.repDormir['DORS PAS']++;
+                else counts.repDormir.PAS_REP++;
+
+                if (isDormirPrevu && (repDormir.includes('AILLEURS') || repDormir.includes('NON'))) {
+                    hebergementAnomaliesHtml += `
+                        <tr class="border-b border-gray-800">
+                            <td class="p-3 font-bold text-emerald-300">${prenom}</td>
+                            <td class="p-3 uppercase text-emerald-300">${nom}</td>
+                            <td class="p-3 text-red-400 font-bold">${repDormir || 'Non renseigné'}</td>
+                        </tr>
+                    `;
+                }
+            });
+
+            document.getElementById('stat-total').innerHTML = `${totalReponses} <span class="text-xs font-normal text-emerald-500">/ ${totalLignesExcel} invités</span>`;
+            document.getElementById('stat-soiree').innerText = presentsSoiree;
+            document.getElementById('stat-allergies').innerText = totalAllergies;
+            document.getElementById('stat-is-mairie').innerText = `${countMairie} / ${totalLignesExcel}`;
+            document.getElementById('stat-is-cocktail').innerText = `${countCocktail} / ${totalLignesExcel}`;
+            document.getElementById('stat-is-repas').innerText = `${countRepas} / ${totalLignesExcel}`;
+            document.getElementById('stat-is-dormir').innerText = `${countDormir} / ${totalLignesExcel}`;
+            document.getElementById('stat-is-brunch').innerText = `${countBrunch} / ${totalLignesExcel}`;
+
+            if (!regimesHtml) regimesHtml = `<tr><td colspan="4" class="p-4 text-center text-emerald-600">Aucun régime spécial signalé.</td></tr>`;
+            document.getElementById('admin-regimes-body').innerHTML = regimesHtml;
+
+            if (!hebergementAnomaliesHtml) hebergementAnomaliesHtml = `<tr><td colspan="3" class="p-4 text-center text-emerald-600">Aucune anomalie d'hébergement détectée.</td></tr>`;
+            document.getElementById('admin-heb-body').innerHTML = hebergementAnomaliesHtml;
+
+            const chartsContainer = document.getElementById('stats-charts-container');
+            chartsContainer.innerHTML = `
+                ${createPieChart("Cocktail", counts.repCocktail)}
+                ${createPieChart("Repas", counts.repRepas)}
+                ${createPieChart("Brunch", counts.repBrunch)}
+                ${createPieChart("Hébergement", counts.repDormir)}
+            `;
+
+            // --- NOUVEAU : ALERTE SURCAPACITÉ À LA CONNEXION ---
+            let surcapaciteMsgs = [];
+            window.globalChambresData.slice(1).forEach(room => {
+                const numChambre = room[1] ? room[1].toString().trim() : '';
+                const capaciteMax = parseInt(room[2]) || 0;
+                let count = 0;
+                for (let k in globalGuestDatabase) {
+                    if (globalGuestDatabase[k].numeroChambre && globalGuestDatabase[k].numeroChambre.toString().trim().toLowerCase() === numChambre.toLowerCase()) {
+                        count++;
+                    }
+                }
+                if (count > capaciteMax) {
+                    surcapaciteMsgs.push(`- Chambre N°${numChambre} : ${count} occupants (Max: ${capaciteMax})`);
+                }
+            });
+            
+            if (surcapaciteMsgs.length > 0) {
+                setTimeout(() => {
+                    alert("⚠️ ALERTE SURCAPACITÉ\n\nDes chambres comptent plus d'occupants que de lits disponibles :\n" + surcapaciteMsgs.join("\n"));
+                }, 500); // Petit délai pour que l'interface ait le temps de s'afficher d'abord
+            }
+        }
+
+        function closeRoomModal() {
+            document.getElementById('room-detail-modal').classList.add('hidden-element');
+        }
+        
+        function renderAdminTable(dataArray) {
+            let fullTableHtml = '';
+            dataArray.forEach(row => {
+                const prenom = row[0] || '-';
+                const nom = row[1] || '-';
+                const telephone = row[2] || 'No phone';
+                const dateRep = row[9];
+                const repCocktail = (row[10] || '').toString().trim().toUpperCase();
+                const repRepas = (row[11] || '').toString().trim().toUpperCase();
+                const repBrunch = (row[12] || '').toString().trim().toUpperCase();
+                const repDormir = (row[13] || '').toString().trim().toUpperCase();
+                const allergies = row[14] || '';
+
+                const aRepondu = (dateRep && dateRep.toString().trim() !== "");
+                const statutIcon = aRepondu ? "✅" : "⛔";
+
+                // Création d'un menu déroulant stylisé pour les droits (OUI/NON)
+                const createRightSelect = (val, colIndex) => {
+                    const isOui = normalizeString(val) === 'oui';
+                    const colorClasses = isOui ? 'border-emerald-600 text-emerald-400' : 'border-red-900 text-red-500';
+                    return `
+                        <select onchange="updateGuestRight('${prenom.replace(/'/g, "\\'")}', '${nom.replace(/'/g, "\\'")}', ${colIndex}, this.value, this)" 
+                                class="bg-black border ${colorClasses} rounded p-1 text-[10px] font-bold uppercase cursor-pointer focus:outline-none transition-colors appearance-none text-center w-full">
+                            <option value="OUI" ${isOui ? 'selected' : ''}>OUI</option>
+                            <option value="NON" ${!isOui ? 'selected' : ''}>NON</option>
+                        </select>
+                    `;
+                };
+
+                fullTableHtml += `
+                    <tr class="border-b border-gray-100 hover:bg-white/10 transition-colors">
+                        <td class="p-3 text-center text-base">${statutIcon}</td>
+                        <td class="p-3 font-bold text-ink">${prenom}</td>
+                        <td class="p-3 uppercase">${nom}</td>
+                        <td class="p-3 text-emerald-400">${telephone}</td>
+                        
+                        <!-- Cellules interactives pour les droits -->
+                        <td class="p-2">${createRightSelect(row[3], 3)}</td>
+                        <td class="p-2">${createRightSelect(row[4], 4)}</td>
+                        <td class="p-2">${createRightSelect(row[5], 5)}</td>
+                        <td class="p-2">${createRightSelect(row[6], 6)}</td>
+                        <td class="p-2">${createRightSelect(row[7], 7)}</td>
+                        
+                        <td class="p-3">${row[8] || '-'}</td>
+                        <td class="p-3 text-gray-400 text-xs">${dateRep ? new Date(dateRep).toLocaleDateString() : '-'}</td>
+                        <td class="p-3">${repCocktail || '-'}</td>
+                        <td class="p-3">${repRepas || '-'}</td>
+                        <td class="p-3">${repBrunch || '-'}</td>
+                        <td class="p-3">${repDormir || '-'}</td>
+                        <td class="p-3 text-gray-300 italic">${allergies || '-'}</td>
+                    </tr>
+                `;
+            });
+            document.getElementById('admin-full-table-body').innerHTML = fullTableHtml;
+        }
+
+        async function updateGuestRight(prenom, nom, colIndex, newValue, selectElement) {
+            const isOui = newValue.toUpperCase() === 'OUI';
+            
+            // 1. Mise à jour visuelle instantanée des couleurs (Vert ou Rouge)
+            selectElement.className = `bg-black border ${isOui ? 'border-emerald-600 text-emerald-400' : 'border-red-900 text-red-500'} rounded p-1 text-[10px] font-bold uppercase cursor-pointer focus:outline-none transition-colors appearance-none text-center w-full`;
+
+            // 2. Mise à jour des données locales (pour que la barre de recherche et les tris ne cassent pas)
+            for (let i = 0; i < globalAdminRowsData.length; i++) {
+                if (globalAdminRowsData[i][0] === prenom && globalAdminRowsData[i][1] === nom) {
+                    globalAdminRowsData[i][colIndex] = newValue.toUpperCase();
+                    break;
+                }
+            }
+
+            const key = normalizeString(prenom) + " " + normalizeString(nom);
+            if (globalGuestDatabase[key]) {
+                if (colIndex === 3) globalGuestDatabase[key].isMairie = isOui;
+                if (colIndex === 4) globalGuestDatabase[key].isCocktail = isOui;
+                if (colIndex === 5) globalGuestDatabase[key].isRepas = isOui;
+                if (colIndex === 6) globalGuestDatabase[key].isDormir = isOui;
+                if (colIndex === 7) globalGuestDatabase[key].isBrunch = isOui;
+            }
+
+            // 3. Envoi silencieux au serveur Google Apps Script
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ 
+                        action: "modifier_droit", 
+                        prenom: prenom, 
+                        nom: nom, 
+                        colIndex: colIndex, 
+                        valeur: newValue.toUpperCase() 
+                    })
+                });
+            } catch (err) {
+                console.error("Erreur de sauvegarde :", err);
+                alert("Erreur de connexion. La modification n'a peut-être pas été enregistrée sur le fichier Excel.");
+            }
+        }
+
+        function formatProperName(text) {
+            if (!text) return "";
+            return text.toString().toLowerCase()
+                .split(/([ \-])/) // Sépare en gardant les espaces et les traits d'union comme séparateurs
+                .map(segment => segment.charAt(0).toUpperCase() + segment.slice(1))
+                .join('');
+        }
+
+        function renderAdminDemandes() {
+            let html = '';
+            globalDemandesData.forEach((row, index) => {
+                if (!row[0]) return;
+                const prenom = row[0];
+                const nom = row[1];
+                const tel = row[2];
+                const inviteMaster = row[15] || '-';
+                const mail = row[16] || '-';
+                const statut = row[17] || 'EN ATTENTE';
+
+                html += `
+                    <tr class="border-b border-gray-800 hover:bg-white/5 transition-colors">
+                        <td class="p-3 font-bold text-emerald-300">${prenom}</td>
+                        <td class="p-3 uppercase text-emerald-300">${nom}</td>
+                        <td class="p-3 text-gray-300">${tel}</td>
+                        <td class="p-3 text-emerald-400">${inviteMaster}</td>
+                        <td class="p-3 text-gray-400">${mail}</td>
+                        <td class="p-3 font-bold ${statut === 'ACCEPTÉE' ? 'text-emerald-500' : statut === 'REFUSÉE' ? 'text-red-500' : 'text-amber-400'}">${statut}</td>
+                        <td class="p-3 text-center">
+                            ${statut === 'EN ATTENTE' ? `
+                                <button onclick="openDemandeModal(${index + 2})" class="bg-amber-500/20 border border-amber-500 text-amber-400 hover:bg-amber-500 hover:text-black px-4 py-1.5 rounded-lg font-bold transition-all text-xs uppercase tracking-wider">Régler</button>
+                            ` : '<span class="text-gray-500 italic">Traité</span>'}
+                        </td>
+                    </tr>
+                `;
+            });
+            document.getElementById('admin-demandes-body').innerHTML = html || `<tr><td colspan="7" class="p-4 text-center text-emerald-600">Aucune demande en cours.</td></tr>`;
+        }
+
+        function openGuestRecapModal() {
+            if (!currentGuestRights) return;
+
+            const r = currentGuestRights;
+            const dateObj = r.dateReponse ? new Date(r.dateReponse) : null;
+            const dateRepFormatee = (dateObj && !isNaN(dateObj.getTime())) ? dateObj.toLocaleString() : '-';
+
+            let html = `
+                <p><strong>Prénom :</strong> ${r.prenom || '-'}</p>
+                <p><strong>Nom :</strong> ${r.nom ? r.nom.toUpperCase() : '-'}</p>
+                <p><strong>Téléphone :</strong> ${r.telephone || '-'}</p>
+            `;
+
+            // Affichage conditionnel selon les droits de l'invité
+            if (r.isMairie) {
+                html += `<p><strong>Mairie :</strong> ${r.isMairie ? 'OUI' : 'NON'}</p>`;
+            }
+            if (r.isCocktail) {
+                html += `<p><strong>Présence Cocktail :</strong> ${r.repCocktail || 'Non renseigné'}</p>`;
+            }
+            if (r.isRepas) {
+                html += `<p><strong>Présence Repas :</strong> ${r.repRepas || 'Non renseigné'}</p>`;
+            }
+            if (r.isBrunch) {
+                html += `<p><strong>Brunch :</strong> ${r.repBrunch || 'Non renseigné'}</p>`;
+            }
+            if (r.isRepas) {
+                html += `<p><strong>Hébergement :</strong> ${r.repDormir || 'Non renseigné'}</p>`;
+            }
+
+            if (r.isDormir && r.repDormir && normalizeString(r.repDormir) === 'sur place') {
+                html += `<p><strong>Numéro de chambre :</strong> ${r.numeroChambre || 'En cours d\'attribution'}</p>`;
+            }
+
+            html += `
+                <p><strong>Allergies / Régime :</strong> ${r.allergies || 'AUCUNE'}</p>
+                <p><strong>Date de dernière réponse :</strong> ${dateRepFormatee}</p>
+            `;
+
+            document.getElementById('guest-recap-content').innerHTML = html;
+            document.getElementById('guest-recap-modal').classList.remove('hidden-element');
+        }
+
+        function closeGuestRecapModal() {
+            document.getElementById('guest-recap-modal').classList.add('hidden-element');
+        }
+
+        let activeAdminRoomNumber = null;
+
+        function renderAdminChambresTab() {
+            if (!window.globalChambresData || window.globalChambresData.length <= 1) return;
+
+            const chambresRows = window.globalChambresData.slice(1); // Ignore l'en-tête
+            let totalCapacite = 0;
+            let totalOccupées = 0;
+            let html = '';
+
+            chambresRows.forEach(room => {
+                const batiment = room[0] || '-';
+                const numChambre = room[1] ? room[1].toString().trim() : '';
+                const capaciteMax = parseInt(room[2]) || 0;
+                totalCapacite += capaciteMax;
+
+                // Récupération de la configuration des lits
+                let litsDesc = [];
+                if (parseInt(room[3]) > 0) litsDesc.push(`${room[3]} Double`);
+                if (parseInt(room[4]) > 0) litsDesc.push(`${room[4]} Simple`);
+                if (parseInt(room[5]) > 0) litsDesc.push(`${room[5]} Superposé`);
+
+                // Recherche des occupants actuels dans globalGuestDatabase (la feuille "Reponses")
+                let occupants = [];
+                for (let key in globalGuestDatabase) {
+                    const guest = globalGuestDatabase[key];
+                    if (guest.numeroChambre && guest.numeroChambre.toString().trim().toLowerCase() === numChambre.toLowerCase()) {
+                        occupants.push({ prenom: guest.prenom, nom: guest.nom });
+                    }
+                }
+
+                totalOccupées += occupants.length;
+
+                const occupantsHtml = occupants.length > 0 
+                    ? occupants.map(o => `<span class="inline-block bg-emerald-950 border border-emerald-800 text-emerald-300 px-2 py-0.5 rounded text-[10px] mr-1 mb-1">${o.prenom} ${o.nom.toUpperCase()}</span>`).join('')
+                    : '<span class="text-gray-500 italic">Chambre vide</span>';
+
+                html += `
+                    <tr class="border-b border-gray-800 hover:bg-white/5 transition-colors">
+                        <td class="p-3 font-bold text-emerald-300">${batiment}</td>
+                        <td class="p-3 font-bold text-white text-sm">N° ${numChambre}</td>
+                        <td class="p-3 text-center font-bold ${occupants.length > capaciteMax ? 'text-red-400' : 'text-emerald-400'}">${occupants.length} / ${capaciteMax}</td>
+                        <td class="p-3 text-gray-300 text-xs">${litsDesc.join(', ') || 'Standard'}</td>
+                        <td class="p-3">${occupantsHtml}</td>
+                        <td class="p-3 text-center">
+                            <button onclick="openAdminRoomModal('${numChambre}', '${batiment}')" class="bg-emerald-600/20 border border-emerald-500 text-emerald-400 hover:bg-emerald-600 hover:text-black px-3 py-1 rounded font-bold transition-all text-xs uppercase">Gérer</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            document.getElementById('stat-places-chambres').innerText = `${totalOccupées} / ${totalCapacite}`;
+            document.getElementById('stat-total-chambres').innerText = chambresRows.length;
+            document.getElementById('admin-chambres-body').innerHTML = html;
+        }
+
+        function openAdminRoomModal(numChambre, batiment) {
+            activeAdminRoomNumber = numChambre;
+            document.getElementById('admin-modal-room-title').innerText = `Chambre N° ${numChambre} (${batiment})`;
+
+            let occupantsHtml = '';
+            for (let key in globalGuestDatabase) {
+                const guest = globalGuestDatabase[key];
+                if (guest.numeroChambre && guest.numeroChambre.toString().trim().toLowerCase() === numChambre.toLowerCase()) {
+                    occupantsHtml += `
+                        <div class="flex justify-between items-center bg-black/60 border border-emerald-900 px-3 py-2 rounded-lg text-xs">
+                            <span class="text-white font-bold">${guest.prenom} ${guest.nom.toUpperCase()}</span>
+                            <button onclick="removeGuestFromRoom('${guest.prenom.replace(/'/g, "\\'")}', '${guest.nom.replace(/'/g, "\\'")}')" class="text-red-400 hover:text-red-300 font-bold uppercase text-[10px] bg-red-950 px-2 py-1 rounded">Retirer</button>
+                        </div>
+                    `;
+                }
+            }
+            document.getElementById('admin-modal-occupants-list').innerHTML = occupantsHtml || '<p class="text-gray-500 italic text-xs text-center py-2">Aucun occupant dans cette chambre.</p>';
+
+            let selectHtml = `<option value="" disabled selected>Sélectionner un invité à ajouter...</option>`;
+            for (let key in globalGuestDatabase) {
+                const guest = globalGuestDatabase[key];
+                // --- NOUVEAU : Ajout du filtre guest.isDormir === true ---
+                if (!guest.isAdmin && !guest.isEasterEgg && guest.isDormir === true) {
+                    const chambreActuelle = guest.numeroChambre ? ` (Actuellement ch. ${guest.numeroChambre})` : ' (Sans chambre)';
+                    selectHtml += `<option value="${guest.prenom}|${guest.nom}">${guest.prenom} ${guest.nom.toUpperCase()}${chambreActuelle}</option>`;
+                }
+            }
+            document.getElementById('admin-select-guest').innerHTML = selectHtml;
+
+            document.getElementById('admin-room-modal').classList.remove('hidden-element');
+        }
+
+        function closeAdminRoomModal() {
+            document.getElementById('admin-room-modal').classList.add('hidden-element');
+        }
+
+        async function assignGuestToCurrentRoom() {
+            const selectEl = document.getElementById('admin-select-guest');
+            const val = selectEl.value;
+            if (!val || !activeAdminRoomNumber) return;
+
+            // --- NOUVEAU : Vérification stricte de la capacité avant ajout ---
+            let capaciteMax = 0;
+            for (let i = 1; i < window.globalChambresData.length; i++) {
+                if (window.globalChambresData[i][1].toString().trim().toLowerCase() === activeAdminRoomNumber.toString().trim().toLowerCase()) {
+                    capaciteMax = parseInt(window.globalChambresData[i][2]) || 0;
+                    break;
+                }
+            }
+
+            let currentOccupantsCount = 0;
+            for (let key in globalGuestDatabase) {
+                const guest = globalGuestDatabase[key];
+                if (guest.numeroChambre && guest.numeroChambre.toString().trim().toLowerCase() === activeAdminRoomNumber.toString().trim().toLowerCase()) {
+                    currentOccupantsCount++;
+                }
+            }
+
+            if (currentOccupantsCount >= capaciteMax) {
+                alert(`⚠️ Impossible d'ajouter cette personne.\nLa chambre N°${activeAdminRoomNumber} est pleine (${capaciteMax}/${capaciteMax} places).`);
+                return; // On stoppe l'action ici
+            }
+            // ------------------------------------------------------------------
+
+            const [prenom, nom] = val.split('|');
+            await updateGuestRoomInExcel(prenom, nom, activeAdminRoomNumber);
+        }
+
+        async function removeGuestFromRoom(prenom, nom) {
+            await updateGuestRoomInExcel(prenom, nom, "-");
+        }
+
+        async function updateGuestRoomInExcel(prenom, nom, nouvelleChambre) {
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: "modifier_chambre", prenom: prenom, nom: nom, chambre: nouvelleChambre })
+                });
+
+                // Mise à jour locale instantanée dans la base mémoire
+                for (let key in globalGuestDatabase) {
+                    if (globalGuestDatabase[key].prenom.toLowerCase() === prenom.toLowerCase() && 
+                        globalGuestDatabase[key].nom.toLowerCase() === nom.toLowerCase()) {
+                        globalGuestDatabase[key].numeroChambre = nouvelleChambre === "-" ? "" : nouvelleChambre;
+                        break;
+                    }
+                }
+
+                // Rafraîchissement des vues admin
+                renderAdminChambresTab();
+                if (activeAdminRoomNumber) {
+                    openAdminRoomModal(activeAdminRoomNumber, ""); // Recharge la pop-up
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Erreur lors de la mise à jour de la chambre.");
+            }
+        }
+        
+        function openRoomModal(numChambre) {
+            if (!numChambre || !window.globalChambresData) return;
+
+            let roomRow = null;
+            for (let i = 1; i < window.globalChambresData.length; i++) {
+                if (window.globalChambresData[i][1].toString().trim().toLowerCase() === numChambre.toString().trim().toLowerCase()) {
+                    roomRow = window.globalChambresData[i];
+                    break;
+                }
+            }
+
+            const contentDiv = document.getElementById('room-detail-content');
+            const subtitleEl = document.getElementById('room-batiment-subtitle');
+
+            if (!roomRow) {
+                subtitleEl.innerText = "";
+                contentDiv.innerHTML = `<p class="text-center text-gray-500 italic">Aucun détail disponible pour la chambre ${numChambre}.</p>`;
+                document.getElementById('room-detail-modal').classList.remove('hidden-element');
+                return;
+            }
+
+            const batiment = roomRow[0] || '';
+            const nbCouchage = roomRow[2] || 0;
+            const litDouble = parseInt(roomRow[3]) || 0;
+            const litSimple = parseInt(roomRow[4]) || 0;
+            const litSuperpose = parseInt(roomRow[5]) || 0;
+            const isPmr = normalizeString(roomRow[6]) === 'oui';
+            const isMarie = normalizeString(roomRow[7]) === 'oui';
+            const isRdc = normalizeString(roomRow[8]) === 'oui';
+
+            subtitleEl.innerText = `Bâtiment : ${batiment.toUpperCase()} ${isRdc ? '(Rez-de-chaussée)' : ''}`;
+
+            let litsHtml = `<div class="flex flex-wrap gap-2 mt-2">`;
+            if (litDouble > 0) litsHtml += `<span class="bg-white px-3 py-1.5 rounded-lg border border-pink-200 text-xs font-bold">🛏️ ${litDouble} Lit(s) double(s)</span>`;
+            if (litSimple > 0) litsHtml += `<span class="bg-white px-3 py-1.5 rounded-lg border border-pink-200 text-xs font-bold">🛌 ${litSimple} Lit(s) simple(s)</span>`;
+            if (litSuperpose > 0) litsHtml += `<span class="bg-white px-3 py-1.5 rounded-lg border border-pink-200 text-xs font-bold">🛌 ${litSuperpose} Lit(s) superposé(s)</span>`;
+            litsHtml += `</div>`;
+
+            let pmrHtml = isPmr ? `<div class="mt-3 flex items-center gap-2 text-emerald-700 font-bold bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">♿ Chambre Accessible PMR</div>` : '';
+            let marieHtml = isMarie ? `<div class="mt-3 p-3 bg-amber-50 border border-amber-200 text-amber-900 rounded-xl font-serif font-bold text-center italic">✨ Vous avez été placé dans une chambre quali !! ✨</div>` : '';
+
+            let colocataires = [];
+            for (let key in globalGuestDatabase) {
+                const guest = globalGuestDatabase[key];
+                if (guest.numeroChambre && guest.numeroChambre.toString().trim().toLowerCase() === numChambre.toString().trim().toLowerCase()) {
+                    colocataires.push(`${guest.prenom} ${guest.nom.toUpperCase()}`);
+                }
+            }
+
+            let occupantsHtml = '';
+            if (colocataires.length > 0) {
+                occupantsHtml = `
+                    <div class="mt-4 pt-4 border-t border-pink-100">
+                        <p class="font-bold text-xs uppercase tracking-widest text-gray-500 mb-2">Composition de la chambre :</p>
+                        <ul class="list-disc list-inside space-y-1 font-semibold text-ink">
+                            ${colocataires.map(c => `<li>${c}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            } else {
+                occupantsHtml = `
+                    <div class="mt-4 pt-4 border-t border-pink-100 text-xs text-gray-500 italic">
+                        Aucun autre occupant enregistré dans cette chambre pour l'instant.
+                    </div>
+                `;
+            }
+
+            // Retrouve le nom du bâtiment
+            let batimentNomModal = roomRow[0] || '';
+
+            contentDiv.innerHTML = `
+                <p><strong>Hébergement :</strong> Chambre N° ${numChambre} - ${batimentNomModal} (${nbCouchage} couchages)</p>
+                <div>
+                    <strong class="block text-xs uppercase tracking-widest text-gray-500 mb-1">Configuration des lits :</strong>
+                    ${litsHtml}
+                </div>
+                ${pmrHtml}
+                ${marieHtml}
+                ${occupantsHtml}
+            `;
+
+            document.getElementById('room-detail-modal').classList.remove('hidden-element');
+        }
+
+        function openDemandeModal(rowIndex) {
+            const rowData = globalDemandesData[rowIndex - 2];
+            if (!rowData) return;
+
+            const contentHtml = `
+                <p><strong>Prénom :</strong> <span class="text-white">${rowData[0]}</span></p>
+                <p><strong>Nom :</strong> <span class="text-white uppercase">${rowData[1]}</span></p>
+                <p><strong>Téléphone :</strong> <span class="text-white">${rowData[2]}</span></p>
+                <p><strong>Droits demandés :</strong> Mairie: ${rowData[3]} | Cocktail: ${rowData[4]} | Repas: ${rowData[5]} | Dormir: ${rowData[6]} | Brunch: ${rowData[7]}</p>
+                <p><strong>Date de demande :</strong> <span class="text-white">${rowData[9] ? new Date(rowData[9]).toLocaleString() : '-'}</span></p>
+                <p><strong>Allergies :</strong> <span class="text-amber-400">${rowData[14]}</span></p>
+                <p><strong>Demandé par (Parrain) :</strong> <span class="text-emerald-400">${rowData[15]}</span></p>
+                <p><strong>Email Notification :</strong> <span class="text-cyan-400">${rowData[16]}</span></p>
+            `;
+
+            document.getElementById('demande-modal-content').innerHTML = contentHtml;
+            
+            // Attribue dynamiquement les actions aux boutons de la modale
+            document.getElementById('modal-btn-valider').setAttribute('onclick', `traiterDemande(${rowIndex}, 'oui')`);
+            document.getElementById('modal-btn-refuser').setAttribute('onclick', `traiterDemande(${rowIndex}, 'non')`);
+
+            document.getElementById('demande-detail-modal').classList.remove('hidden-element');
+        }
+
+        function closeDemandeModal() {
+            document.getElementById('demande-detail-modal').classList.add('hidden-element');
+        }
+
+        async function traiterDemande(rowIndex, decision) {
+            closeDemandeModal();
+
+            try {
+                // Envoi de la requête en arrière-plan sans recharger la page
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: "traiter_demande", rowIndex: rowIndex, decision: decision })
+                });
+
+                // Mise à jour instantanée locale des données sans rechargement
+                const indexInGlobal = rowIndex - 2;
+                if (globalDemandesData[indexInGlobal]) {
+                    globalDemandesData[indexInGlobal][17] = decision === 'oui' ? 'ACCEPTÉE' : 'REFUSÉE';
+                }
+
+                // Réactualisation de l'affichage de l'onglet et des compteurs
+                renderAdminDemandes();
+                
+                // Petit effet visuel de succès discret
+                console.log("Action exécutée avec succès pour la ligne " + rowIndex);
+
+            } catch(err) {
+                console.error(err);
+                alert("Erreur lors du traitement de la demande.");
+            }
+        }
+
+        function filterAdminTable() {
+            const inputElement = document.getElementById('admin-search-input');
+            if (!inputElement) return;
+            
+            const query = normalizeString(inputElement.value);
+            
+            if (!globalAdminRowsData || globalAdminRowsData.length === 0) {
+                return;
+            }
+
+            if (query === "") {
+                document.getElementById('admin-no-result').classList.add('hidden-element');
+                renderAdminTable(globalAdminRowsData);
+                return;
+            }
+
+            const filteredRows = globalAdminRowsData.filter(row => {
+                return row.some(cell => normalizeString(cell).includes(query));
+            });
+
+            const noResultEl = document.getElementById('admin-no-result');
+            if (filteredRows.length === 0) {
+                noResultEl.classList.remove('hidden-element');
+            } else {
+                noResultEl.classList.add('hidden-element');
+            }
+            
+            renderAdminTable(filteredRows);
+        }
+
+        // Tri interactif par clic sur les colonnes
+        let sortDirections = {};
+
+        function sortTable(columnIndex) {
+            let dir = sortDirections[columnIndex] === 'asc' ? 'desc' : 'asc';
+            sortDirections[columnIndex] = dir;
+
+            globalAdminRowsData.sort((a, b) => {
+                let valA = (a[columnIndex] || '').toString().toLowerCase();
+                let valB = (b[columnIndex] || '').toString().toLowerCase();
+                if (valA < valB) return dir === 'asc' ? -1 : 1;
+                if (valA > valB) return dir === 'asc' ? 1 : -1;
+                return 0;
+            });
+            renderAdminTable(globalAdminRowsData);
+        }
+
+        function createPieChart(title, dataObj) {
+            const total = Object.values(dataObj).reduce((a, b) => a + b, 0) || 1;
+            let cumulativePercent = 0;
+            let colorMap = { 'OUI': '#10B981', 'NON': '#EF4444', 'PAS_REP': '#4B5563', 'SUR PLACE': '#10B981', 'AILLEURS': '#F59E0B', 'DORS PAS': '#EF4444' };
+            
+            let gradientStops = [];
+            let legendHtml = '';
+
+            for (let [key, val] of Object.entries(dataObj)) {
+                let percent = (val / total) * 100;
+                let startAngle = cumulativePercent;
+                cumulativePercent += percent;
+                let color = colorMap[key] || '#CBD5E1';
+                
+                gradientStops.push(`${color} ${startAngle}% ${cumulativePercent}%`);
+                legendHtml += `
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full inline-block" style="background-color: ${color};"></span>${key}</span>
+                        <span class="font-bold">${val}</span>
+                    </div>
+                `;
+            }
+
+            const conicStyle = `background: conic-gradient(${gradientStops.join(', ')});`;
+
+            return `
+                <div class="bg-white/70 border border-pink-100 p-6 rounded-xl shadow-sm flex flex-col items-center">
+                    <h4 class="font-serif text-lg font-bold text-ink mb-4">${title}</h4>
+                    <div class="w-32 h-32 rounded-full shadow-inner mb-4 border-2 border-white" style="${conicStyle}"></div>
+                    <div class="w-full space-y-1">${legendHtml}</div>
+                </div>
+            `;
+        }
+
+        function initCountdown() {
+            if (window.isEasterEggActive) {
+                document.getElementById("cd-days").innerText = "10";
+                document.getElementById("cd-hours").innerText = "04";
+                document.getElementById("cd-minutes").innerText = "20";
+                document.getElementById("cd-seconds").innerText = "27";
+                return; 
+            }
+
+            const targetDate = new Date("April 10, 2027 11:40:00").getTime();
+            setInterval(() => {
+                const distance = targetDate - new Date().getTime();
+                if (distance < 0) return;
+                document.getElementById("cd-days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                document.getElementById("cd-hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById("cd-minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById("cd-seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            }, 1000);
+        }
+
+        function initGSAP() {
+            gsap.registerPlugin(ScrollTrigger);
+            gsap.from(".gsap-hero", { y: 30, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out" });
+            gsap.utils.toArray('.gsap-fade').forEach(element => {
+                gsap.from(element, { scrollTrigger: { trigger: element, start: "top 85%" }, y: 30, opacity: 0, duration: 0.8, ease: "power2.out" });
+            });
+            gsap.to(".bg-fixed-watermark", { yPercent: 10, ease: "none", scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: true }});
+        }
+
+        function initScratchCard() {
+            const canvas = document.getElementById('scratch-canvas');
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false, isRevealed = false;
+
+            ctx.fillStyle = window.isEasterEggActive ? '#333333' : '#D98880'; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            document.getElementById('date-secrete').style.opacity = '1';
+            
+            for(let i=0; i<500; i++) { 
+                ctx.fillStyle = Math.random() > 0.5 ? (window.isEasterEggActive ? '#444' : '#E09993') : (window.isEasterEggActive ? '#222' : '#C8766F'); 
+                ctx.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 2, 2); 
+            }
+            ctx.lineJoin = "round"; ctx.lineCap = "round"; ctx.lineWidth = 25; ctx.globalCompositeOperation = "destination-out";
+
+            function getMousePos(e) { const rect = canvas.getBoundingClientRect(); return { x: (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left, y: (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top }; }
+            function scratch(e) { if (!isDrawing || isRevealed) return; e.preventDefault(); const pos = getMousePos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke(); checkReveal(); }
+            function startScratch(e) { if (isRevealed) return; isDrawing = true; const pos = getMousePos(e); ctx.beginPath(); ctx.moveTo(pos.x, pos.y); }
+            function stopScratch() { isDrawing = false; }
+            function checkReveal() {
+                const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+                let transparent = 0;
+                for (let i = 3; i < pixels.length; i += 4) { if (pixels[i] === 0) transparent++; }
+                if ((transparent / (pixels.length / 4)) * 100 > 45) {
+                    isRevealed = true;
+                    gsap.to(canvas, { opacity: 0, duration: 0.5, onComplete: () => {
+                        canvas.style.display = 'none';
+                        document.body.classList.remove('no-scroll'); 
+                        document.getElementById('scroll-arrow').style.opacity = '1';
+                        document.getElementById('scroll-arrow').classList.remove('pointer-events-none');
+                        
+                        // APPARITION FLUIDE DE LA BARRE DE NAVIGATION
+                        const nav = document.getElementById('main-navbar');
+                        nav.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-full');
+
+                        triggerConfetti();
+                    }});
+                }
+            }
+            canvas.addEventListener('mousedown', startScratch); canvas.addEventListener('mousemove', scratch);
+            canvas.addEventListener('mouseup', stopScratch); canvas.addEventListener('mouseleave', stopScratch);
+            canvas.addEventListener('touchstart', startScratch, {passive: false}); canvas.addEventListener('touchmove', scratch, {passive: false}); canvas.addEventListener('touchend', stopScratch);
+        }
+
+        function triggerConfetti() {
+            if(window.isEasterEggActive) return; 
+
+            var end = Date.now() + 3000;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100, colors: ['#D98880', '#F5B7B1', '#F4D03F', '#A3E4D7', '#AED6F1'] };
+            var interval = setInterval(function() {
+                if (end - Date.now() <= 0) return clearInterval(interval);
+                confetti(Object.assign({}, defaults, { particleCount: 50, origin: { x: Math.random() * 0.2 + 0.1, y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount: 50, origin: { x: Math.random() * 0.2 + 0.7, y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+
+        const mapUrls = {
+            'mairie': "https://maps.google.com/maps?q=Mairie+de+Versailles,+Avenue+de+Paris,+Versailles&hl=fr&z=16&output=embed",
+            'cathedrale': "https://maps.google.com/maps?q=Cathédrale+Saint-Louis,+Place+Saint-Louis,+Versailles&hl=fr&z=17&output=embed",
+            'domaine': "https://maps.google.com/maps?q=Domaine+de+Vaujoly,+Courville-sur-Eure&hl=fr&z=15&output=embed",
+            'secret': "https://maps.google.com/maps?q=0.6568,-11.329&hl=fr&z=6&output=embed" ,
+            'maison_carnot' : "https://www.google.com/maps/embed?origin=mfe&pb=!1m3!2m1!1sMaison+Carnot+du+Domaine+de+Vaujoly!6i17!3m1!1sfr!5m1!1sfr"
+        };
+
+        function changeMap(location, btnElement) {
+            const mapContainer = document.getElementById('map-container');
+            const badge = document.getElementById('map-room-badge');
+            if (badge) badge.classList.add('hidden-element');
+
+            const themeColors = {
+                'mairie': '#D98880',     
+                'cathedrale': '#F59E0B', 
+                'domaine': '#10B981',    
+                'secret': '#DC2626',     
+                'brunch': '#0EA5E9',
+                'dodo': '#6366F1'
+            };
+
+            const themeName = btnElement.getAttribute('data-theme') || location;
+            const activeFlashyColor = themeColors[themeName] || '#D98880';
+
+            // --- Logique d'accordéon (Si on clique sur le bouton déjà ouvert, on le ferme) ---
+            if (btnElement.classList.contains('active')) {
+                btnElement.classList.remove('active');
+                mapContainer.classList.add('hidden-element');
+                
+                // Réinitialise les couleurs du bouton qu'on vient de refermer
+                if (!btnElement.id.includes('timeline-secret')) {
+                    btnElement.style.borderColor = '';
+                    const leftBadge = btnElement.querySelector('div:first-child');
+                    const rightContent = btnElement.querySelector('div:nth-child(2)');
+                    if (leftBadge) leftBadge.querySelectorAll('span').forEach(el => el.style.color = '');
+                    if (rightContent) {
+                        rightContent.style.backgroundColor = '';
+                        rightContent.querySelectorAll('h3, p, strong').forEach(el => el.style.color = '');
+                    }
+                }
+                return; // Stoppe l'exécution ici, la carte est rangée.
+            }
+
+            // On réinitialise tous les boutons avant d'ouvrir le nouveau
+            document.querySelectorAll('.timeline-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (!btn.id.includes('timeline-secret')) {
+                    btn.style.borderColor = '';
+                    const leftBadge = btn.querySelector('div:first-child');
+                    const rightContent = btn.querySelector('div:nth-child(2)');
+                    if (leftBadge) leftBadge.querySelectorAll('span').forEach(el => el.style.color = '');
+                    if (rightContent) {
+                        rightContent.style.backgroundColor = '';
+                        rightContent.querySelectorAll('h3, p, strong').forEach(el => el.style.color = '');
+                    }
+                }
+            });
+            
+            // Activation du nouveau bouton ciblé
+            btnElement.classList.add('active');
+            
+            // On déplace le HTML de la carte dynamiquement *JUSTE APRÈS* le bouton ciblé !
+            btnElement.after(mapContainer);
+            mapContainer.classList.remove('hidden-element');
+
+            if (!btnElement.id.includes('timeline-secret')) {
+                const leftBadge = btnElement.querySelector('div:first-child');
+                const rightContent = btnElement.querySelector('div:nth-child(2)');
+                if (leftBadge && rightContent) {
+                    if (!window.isEasterEggActive) {
+                        leftBadge.querySelectorAll('span').forEach(el => el.style.color = '#000000');
+                        btnElement.style.borderColor = activeFlashyColor;
+                        rightContent.style.backgroundColor = activeFlashyColor;
+                        mapContainer.style.borderColor = activeFlashyColor;
+                        rightContent.querySelectorAll('h3, p, strong').forEach(el => el.style.color = '#ffffff');
+                    }
+                }
+            } else {
+                mapContainer.style.borderColor = '#DC2626';
+            }
+
+            const hud = document.getElementById('secret-hud');
+            if(location === 'secret') hud.classList.remove('hidden-element');
+            else hud.classList.add('hidden-element');
+
+            const iframe = document.getElementById('gmap-iframe');
+            if (iframe) {
+                iframe.classList.remove('hidden-element', 'pointer-events-none');
+                gsap.to(iframe, { opacity: 0, duration: 0.2, onComplete: () => {
+                    iframe.src = mapUrls[location];
+                    gsap.to(iframe, { opacity: 1, duration: 0.4, delay: 0.2 });
+                }});
+            }
+        }
+
+        function openDodoMap(numChambre, btnElement) {
+            if (!numChambre || !window.globalChambresData) return;
+
+            let roomRow = null;
+            for (let i = 1; i < window.globalChambresData.length; i++) {
+                if (window.globalChambresData[i][1].toString().trim().toLowerCase() === numChambre.toString().trim().toLowerCase()) {
+                    roomRow = window.globalChambresData[i];
+                    break;
+                }
+            }
+            if (!roomRow) return;
+
+            const batiment = roomRow[0] || '';
+            const gpsLink = roomRow[9] || '';
+            const mapContainer = document.getElementById('map-container');
+            const badge = document.getElementById('map-room-badge');
+            if (badge) badge.classList.add('hidden-element');
+
+            // --- Logique d'accordéon pour le Dodo ---
+            if (btnElement.classList.contains('active')) {
+                btnElement.classList.remove('active');
+                mapContainer.classList.add('hidden-element');
+                btnElement.style.borderColor = '';
+                const leftBadge = btnElement.querySelector('div:first-child');
+                const rightContent = btnElement.querySelector('div:nth-child(2)');
+                if (leftBadge) leftBadge.querySelectorAll('span').forEach(el => el.style.color = '');
+                if (rightContent) {
+                    rightContent.style.backgroundColor = '';
+                    rightContent.querySelectorAll('h3, p, strong').forEach(el => el.style.color = '');
+                }
+                return;
+            }
+
+            document.querySelectorAll('.timeline-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (!btn.id.includes('timeline-secret')) {
+                    btn.style.borderColor = '';
+                    const leftBadge = btn.querySelector('div:first-child');
+                    const rightContent = btn.querySelector('div:nth-child(2)');
+                    if (leftBadge) leftBadge.querySelectorAll('span').forEach(el => el.style.color = '');
+                    if (rightContent) {
+                        rightContent.style.backgroundColor = '';
+                        rightContent.querySelectorAll('h3, p, strong').forEach(el => el.style.color = '');
+                    }
+                }
+            });
+
+            btnElement.classList.add('active');
+            // On déplace le HTML de la carte dynamiquement *JUSTE APRÈS* le bouton Dodo
+            btnElement.after(mapContainer);
+            mapContainer.classList.remove('hidden-element');
+
+            const leftBadge = btnElement.querySelector('div:first-child');
+            const rightContent = btnElement.querySelector('div:nth-child(2)');
+            if (leftBadge && rightContent) {
+                if (!window.isEasterEggActive) {
+                    leftBadge.querySelectorAll('span').forEach(el => el.style.color = '#000000');
+                    btnElement.style.borderColor = '#6366F1';
+                    rightContent.style.backgroundColor = '#6366F1';
+                    mapContainer.style.borderColor = '#6366F1';
+                    rightContent.querySelectorAll('h3, p, strong').forEach(el => el.style.color = '#ffffff');
+                }
+            }
+
+            const iframe = document.getElementById('gmap-iframe');
+            if (gpsLink && gpsLink.trim() !== '' && gpsLink !== '-') {
+                if (iframe) {
+                    iframe.classList.remove('hidden-element', 'pointer-events-none');
+                    
+                    let finalUrl = gpsLink.trim();
+                    if (finalUrl.includes('q=') && !finalUrl.includes('Maison') && !finalUrl.includes('Domaine')) {
+                        finalUrl = finalUrl.replace(/&z=\d+/, '&z=18');
+                        if (!finalUrl.includes('&z=')) finalUrl += '&z=18';
+                        if (!finalUrl.includes('&t=')) finalUrl += '&t=k';
+                    }
+
+                    gsap.to(iframe, { opacity: 0, duration: 0.1, onComplete: () => {
+                        iframe.src = "about:blank"; // force le reset
+                        setTimeout(() => {
+                            iframe.src = finalUrl;
+                            gsap.to(iframe, { opacity: 1, duration: 0.4 });
+                        }, 50);
+                    }});
+                }
+
+                if (badge) {
+                    badge.innerHTML = `<strong>${batiment.toUpperCase()}</strong><br>Chambre N° ${numChambre}`;
+                    badge.classList.remove('hidden-element');
+                }
+            }
+        }
+
+        function initFloatingHead() {
+            const head = document.getElementById('floating-head');
+            if(!head) return;
+            head.classList.remove('hidden-element');
+
+            let x = Math.random() * (window.innerWidth - 64);
+            let y = Math.random() * (window.innerHeight - 64);
+            let angle = Math.random() * Math.PI * 2;
+            let baseSpeed = 1.5;
+            let vx = Math.cos(angle) * baseSpeed;
+            let vy = Math.sin(angle) * baseSpeed;
+            let multiplier = 1;
+            const targetMultiplier = 1;
+            const friction = 0.03;
+
+            function animate() {
+                multiplier += (targetMultiplier - multiplier) * friction;
+                x += vx * multiplier; y += vy * multiplier;
+                if (x <= 0 || x >= window.innerWidth - head.offsetWidth) { vx *= -1; x = Math.max(0, Math.min(x, window.innerWidth - head.offsetWidth)); }
+                if (y <= 0 || y >= window.innerHeight - head.offsetHeight) { vy *= -1; y = Math.max(0, Math.min(y, window.innerHeight - head.offsetHeight)); }
+                head.style.transform = `translate(${x}px, ${y}px)`;
+                requestAnimationFrame(animate);
+            }
+
+            head.addEventListener('click', () => {
+                angle = Math.random() * Math.PI * 2;
+                vx = Math.cos(angle) * baseSpeed; vy = Math.sin(angle) * baseSpeed;
+                multiplier = 10;
+            });
+            animate();
+        }
+
+        function addFamilyMember(defaultFirst = '', defaultLast = '', guestData = null) {
+            guestCount++;
+            const container = document.getElementById('family-members-container');
+            const removeBtnHtml = guestCount > 1 ? `<button type="button" onclick="this.closest('.guest-form-block').remove()" class="text-xs text-gray-500 uppercase tracking-widest hover:underline mt-2 md:mt-0 font-bold">Retirer</button>` : ``;
+
+            const activeData = guestData || currentGuestRights || {};
+            let isDormir = activeData.isDormir || false;
+            let isCocktail = activeData.isCocktail || false; 
+            let isRepas = activeData.isRepas || false;
+            let isBrunch = activeData.isBrunch || false;
+
+            let extraQuestionsHtml = ``;
+
+            if (isCocktail) {
+                extraQuestionsHtml += `
+                <div class="mt-4">
+                    <label class="block text-xs uppercase tracking-widest text-gray-700 mb-2 font-bold">Présence au Cocktail</label>
+                    <select name="presence_cocktail_${guestCount}" class="w-full bg-white/70 border border-pink-200 rounded-lg px-4 py-3 focus:outline-none focus:border-terracotta" required>
+                        <option value="" disabled selected>Option</option>
+                        <option value="oui">Oui</option><option value="non">Non</option>
+                    </select>
+                </div>`;
+            }
+            if (isRepas) {
+                extraQuestionsHtml += `
+                <div class="mt-4">
+                    <label class="block text-xs uppercase tracking-widest text-gray-700 mb-2 font-bold">Présence au Repas</label>
+                    <select name="presence_repas_${guestCount}" class="w-full bg-white/70 border border-pink-200 rounded-lg px-4 py-3 focus:outline-none focus:border-terracotta" required>
+                        <option value="" disabled selected>Option</option>
+                        <option value="oui">Oui</option><option value="non">Non</option>
+                    </select>
+                </div>`;
+            }
+
+            if(isBrunch) {
+                extraQuestionsHtml += `<div class="mt-4"><label class="block text-xs uppercase tracking-widest text-gray-700 mb-2 font-bold">Brunch (Dimanche)</label><select name="brunch_${guestCount}" class="w-full bg-white/70 border border-pink-200 rounded-lg px-4 py-3 focus:outline-none focus:border-terracotta" required><option value="" disabled selected>Option</option><option value="oui">Présent(e)</option><option value="non">Absent(e)</option></select></div>`;
+            }
+            
+            if (isRepas) {
+                let optionsDormir = `<option value="" disabled selected>Option</option>`;
+                if (isDormir) {
+                    optionsDormir += `<option value="sur place">Je dors sur place au frais des mariés</option>`;
+                }
+                optionsDormir += `
+                    <option value="ailleurs">J'ai déjà / Je trouve mon logement</option>
+                    <option value="non">Je ne dors pas sur place</option>
+                `;
+                
+                extraQuestionsHtml += `
+                    <div class="mt-4">
+                        <label class="block text-xs uppercase tracking-widest text-gray-700 mb-2 font-bold">Hébergement</label>
+                        <select name="hebergement_${guestCount}" class="w-full bg-white/70 border border-pink-200 rounded-lg px-4 py-3 focus:outline-none focus:border-terracotta" required>
+                            ${optionsDormir}
+                        </select>
+                    </div>`;
+            }
+
+            let emailHtml = guestCount > 1 ? `
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-terracotta mb-2 font-bold">Email de cet accompagnant (Requis)</label>
+                    <input type="email" name="mail_${guestCount}" placeholder="exemple@domaine.com" required class="w-full bg-white/70 border border-pink-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-terracotta">
+                </div>
+            ` : ``;
+
+            // On retire le champ Allergie si le mode mystère est actif
+            let allergiesHtml = window.isEasterEggActive ? '' : `
+                <div>
+                    <label class="block text-xs uppercase tracking-widest text-gray-700 mb-2 font-bold">Allergies / Régime spécial ? (laisser vide si aucun)</label>
+                    <input type="text" name="allergies_${guestCount}" placeholder="Ex: Végétarien..." class="w-full bg-white/70 border border-pink-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-terracotta">
+                </div>
+            `;
+
+            // Verrouiller Prénom/Nom pour tout le monde si le champ est pré-rempli (invité principal)
+            const isLocked = (defaultFirst !== '');
+            const readonlyAttr = isLocked ? 'readonly' : '';
+            const cursorClass = isLocked ? 'cursor-not-allowed opacity-75 bg-white/40' : 'bg-white/70 focus:border-terracotta focus:bg-white';
+
+            container.insertAdjacentHTML('beforeend', `
+                <div class="guest-form-block bg-white/70 backdrop-blur-sm p-6 border border-pink-200 rounded-xl shadow-sm relative" data-index="${guestCount}">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 pb-4 border-b border-pink-100">
+                        <h4 class="font-serif text-xl text-ink">Invité #${guestCount}</h4>${removeBtnHtml}
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <input type="text" id="prenom_${guestCount}" name="prenom_${guestCount}" placeholder="Prénom" value="${defaultFirst}" ${readonlyAttr} class="w-full border border-pink-200 rounded-lg px-4 py-3 text-sm focus:outline-none ${cursorClass}" onblur="this.value = formatProperName(this.value); checkCompanion(this.value, document.getElementById('nom_${guestCount}').value, ${guestCount})">
+                        <input type="text" id="nom_${guestCount}" name="nom_${guestCount}" placeholder="Nom" value="${defaultLast}" ${readonlyAttr} class="w-full border border-pink-200 rounded-lg px-4 py-3 text-sm focus:outline-none ${cursorClass}" onblur="this.value = this.value.toUpperCase(); checkCompanion(document.getElementById('prenom_${guestCount}').value, this.value, ${guestCount})">
+                    </div>
+                    
+                    <div id="companion-alert-${guestCount}" class="text-xs font-bold mb-4 hidden-element rounded p-2"></div>
+                    
+                    <div class="space-y-4">
+                        ${extraQuestionsHtml}
+                        <div>
+                            <label class="block text-xs uppercase tracking-widest text-gray-700 mb-2 font-bold">Numéro de téléphone portable</label>
+                            <input type="tel" name="telephone_${guestCount}" placeholder="Ex: 0612345678" inputmode="numeric" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);" class="w-full bg-white/70 border border-pink-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-terracotta">
+                        </div>
+                        ${emailHtml}
+                        ${allergiesHtml}
+                    </div>
+                </div>
+            `);
+        }
+        
+        function checkCompanion(p, n, index) {
+            if(!p || !n || index === 1) return; 
+            
+            const key = normalizeString(p) + " " + normalizeString(n);
+            const alertDiv = document.getElementById(`companion-alert-${index}`);
+            alertDiv.classList.remove('hidden-element');
+            
+            if(globalGuestDatabase[key]) {
+                const companionData = globalGuestDatabase[key];
+                if(companionData.dateReponse && companionData.dateReponse !== "") {
+                    alertDiv.className = "text-xs font-bold mb-4 rounded p-3 bg-amber-50 text-amber-700 border border-amber-200 shadow-sm";
+                    alertDiv.innerText = `Attention : ${companionData.prenom} a déjà répondu le ${new Date(companionData.dateReponse).toLocaleDateString()}. En continuant, vous écraserez ses réponses.`;
+                } else {
+                    alertDiv.className = "text-xs font-bold mb-4 rounded p-3 bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-sm";
+                    alertDiv.innerText = `Parfait, ${companionData.prenom} est bien dans la liste !`;
+                }
+            } else {
+                alertDiv.className = "text-xs font-bold mb-4 rounded p-3 bg-red-50 text-red-600 border border-red-200 shadow-sm";
+                alertDiv.innerText = `⚠️ Personne introuvable dans la liste. La demande sera mise en attente.`;
+            }
+        }
+
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            const submitBtn = form.querySelector('button[type="submit"]');
+            
+            const btnOriginalText = submitBtn.innerText;
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Envoi...";
+
+            // LOGIQUE EXCLUSIVE POUR L'INVITÉ MYSTÈRE (Pas d'envoi Google Sheet)
+            if (window.isEasterEggActive) {
+                const rawPhone = data['telephone_1'] ? data['telephone_1'].replace(/[\s\.\-\+]/g, '') : '';
+                
+                if (rawPhone !== '0656811329') {
+                    let errorMsg = document.getElementById('easter-egg-error');
+                    const phoneInput = form.querySelector('input[name="telephone_1"]');
+                    
+                    if (!errorMsg && phoneInput) {
+                        errorMsg = document.createElement('p');
+                        errorMsg.id = 'easter-egg-error';
+                        errorMsg.className = 'text-red-500 text-xs mt-2 font-bold font-mono animate-pulse';
+                        phoneInput.parentNode.appendChild(errorMsg);
+                    }
+                    if (errorMsg) errorMsg.innerText = `> Hmm... Le ${rawPhone || 'numéro'} ne semble pas joignable. Vérifiez vos coordonnées.`;
+                    if (phoneInput) phoneInput.style.borderColor = '#ef4444'; 
+                    
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = btnOriginalText;
+                    return; // Arrête l'exécution ici en cas d'erreur
+                } else {
+                    // Succès : Lance l'appel et NE VA PAS PLUS LOIN
+                    document.getElementById('escape-chat-modal').classList.remove('hidden-element');
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = btnOriginalText;
+                    return; // <-- POINT CLÉ : Arrête l'exécution, le fetch() vers Google Sheet n'aura pas lieu !
+                }
+            }
+
+            // LOGIQUE NORMALE POUR LES VRAIS INVITÉS (Envoi Google Sheet)
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(data)
+                });
+                
+                document.getElementById('rsvp-step-2').classList.add('hidden-element');
+                document.getElementById('success-message').classList.remove('hidden-element');
+
+                // --- GESTION DU TEXTE DYNAMIQUE DE SUCCÈS POUR L'ACCOMPAGNANT ---
+                const extraTextDiv = document.getElementById('success-extra-text');
+                extraTextDiv.innerHTML = ""; // On réinitialise
+
+                // Si un 2ème invité (accompagnant) a été rempli dans le formulaire
+                if (data['prenom_2'] && data['mail_2']) {
+                    const accPrenom = data['prenom_2'];
+                    const accNom = data['nom_2'] ? data['nom_2'].toUpperCase() : '';
+                    const accMail = data['mail_2'];
+
+                    extraTextDiv.innerHTML = `
+                        <div class="p-4 bg-pastelPink/60 border border-pink-200 rounded-xl inline-block text-left max-w-lg mx-auto shadow-sm text-ink">
+                            <p class="mb-1">✨ La demande d'ajout de <strong>${accPrenom} ${accNom}</strong> a bien été prise en compte.</p>
+                            <p class="text-xs text-gray-500">Pense à lui dire de surveiller sa boîte mail (<strong>${accMail}</strong>) ainsi que ses <strong>spams</strong> !</p>
+                        </div>
+                    `;
+                }
+
+                document.getElementById('success-message').classList.remove('hidden-element');
+
+                // --- MISE À JOUR DYNAMIQUE DE LA TIMELINE POUR LE DODO ---
+                if (data.hebergement_1 && currentGuestRights.isDormir) {
+                    currentGuestRights.repDormir = data.hebergement_1;
+                    const existingDodoBtn = document.getElementById('timeline-dodo');
+                    const programmeContainer = document.getElementById('timeline-container');
+                    const btnBrunch = document.getElementById('timeline-brunch');
+
+                    if (data.hebergement_1 === 'sur place') {
+                        if (!existingDodoBtn && programmeContainer) {
+                            let batimentNom = "";
+                            if (window.globalChambresData) {
+                                for (let i = 1; i < window.globalChambresData.length; i++) {
+                                    if (window.globalChambresData[i][1].toString().trim().toLowerCase() === currentGuestRights.numeroChambre.toString().trim().toLowerCase()) {
+                                        batimentNom = window.globalChambresData[i][0];
+                                        break;
+                                    }
+                                }
+                            }
+                            // Si le numéro de chambre est vide ou inexistant
+                            const hasRoom = currentGuestRights.numeroChambre && currentGuestRights.numeroChambre.toString().trim() !== "";
+                            const texteChambreComplet = hasRoom 
+                                ? (batimentNom ? `Chambre ${currentGuestRights.numeroChambre} - ${batimentNom}` : `Chambre ${currentGuestRights.numeroChambre}`)
+                                : `Attribution en cours`;
+
+                            const actionBtnHtml = hasRoom 
+                                ? `<div onclick="event.stopPropagation(); openRoomModal('${currentGuestRights.numeroChambre}')" class="cursor-pointer text-[10px] uppercase tracking-widest font-bold text-indigo-700 border border-indigo-300 bg-indigo-50 rounded-md px-3 py-2 hover:bg-indigo-600 hover:text-white transition-colors shadow-sm relative z-10 whitespace-nowrap">Détails chambre</div>`
+                                : `<div onclick="event.stopPropagation(); openAlertEmailModal()" class="cursor-pointer text-[10px] uppercase tracking-widest font-bold text-indigo-700 border border-indigo-300 bg-indigo-50 rounded-md px-3 py-2 hover:bg-indigo-600 hover:text-white transition-colors shadow-sm relative z-10 whitespace-nowrap">M'alerter</div>`;
+
+                            const onClickAttr = hasRoom ? `openDodoMap('${currentGuestRights.numeroChambre}', this)` : `this.classList.toggle('active')`;
+
+                            const btnDodo = `
+                                <button id="timeline-dodo" data-theme="dodo" onclick="${onClickAttr}" class="timeline-btn flex items-stretch text-left border-[2px] border-indigo-200 bg-white rounded-xl overflow-hidden hover:border-indigo-500 transition-all duration-300 group shadow-sm w-full relative">
+                                    <div class="w-24 flex-shrink-0 flex flex-col items-center justify-center bg-indigo-50 text-indigo-700 border-r border-indigo-100 py-4 transition-colors">
+                                        <span class="font-serif text-xl md:text-2xl font-bold group-hover:scale-110 transition-transform">Nuit</span>
+                                    </div>
+                                    <div class="flex-1 p-5 md:p-6 flex flex-col justify-center transition-colors duration-300">
+                                        <div class="flex justify-between items-center w-full gap-2">
+                                            <div>
+                                                <h3 class="font-serif text-xl uppercase tracking-wider text-ink mb-1">Votre Hébergement</h3>
+                                                <p class="text-sm text-gray-600 font-sans m-0"><strong>${texteChambreComplet}</strong> (⚠️Chambre disponible de 18h à 11h)</p>
+                                            </div>
+                                            ${actionBtnHtml}
+                                        </div>
+                                    </div>
+                                </button>
+                            `;
+                        }
+                    } else {
+                        if (existingDodoBtn) {
+                            existingDodoBtn.remove();
+                        }
+                        const mapContainer = document.getElementById('map-container');
+                        if (mapContainer && !mapContainer.classList.contains('hidden-element') && mapContainer.style.borderColor === 'rgb(99, 102, 241)') {
+                            mapContainer.classList.add('hidden-element');
+                        }
+                    }
+                }
+            } catch(err) {
+                alert("Erreur lors de la transmission des données.");
+                submitBtn.disabled = false;
+                submitBtn.innerText = btnOriginalText;
+            }
+        }
+
+        function answerCall() {
+            document.getElementById('ringing-screen').classList.add('hidden-element');
+            document.getElementById('chat-screen').classList.remove('hidden-element');
+            
+            const chatBox = document.getElementById('chat-messages');
+            const typingHtml = `<div id="typing-indicator" class="text-red-900 text-xs italic">Inconnu est en train d'écrire...</div>`;
+            chatBox.insertAdjacentHTML('beforeend', typingHtml);
+
+            setTimeout(() => {
+                document.getElementById('typing-indicator').remove();
+                chatBox.insertAdjacentHTML('beforeend', `
+                    <div class="bg-red-900/20 border border-red-900 p-3 text-red-500 self-start max-w-[80%] rounded-tr-lg rounded-br-lg rounded-bl-lg">
+                        Salut ${guestFirstName}, as-tu trouvé le code ??
+                    </div>
+                `);
+                document.getElementById('chat-input-area').classList.remove('hidden-element');
+            }, 2500);
+        }
+
+        function openAlertEmailModal() {
+            document.getElementById('alert-email-success').classList.add('hidden-element');
+            document.getElementById('alert-email-input').value = "";
+            document.getElementById('alert-email-modal').classList.remove('hidden-element');
+        }
+
+        function closeAlertEmailModal() {
+            document.getElementById('alert-email-modal').classList.add('hidden-element');
+        }
+
+        async function submitAlertEmail(e) {
+            e.preventDefault();
+            const email = document.getElementById('alert-email-input').value;
+            if (!email || !currentGuestRights) return;
+
+            try {
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ 
+                        action: "sauvegarder_alerte_chambre", 
+                        prenom: currentGuestRights.prenom, 
+                        nom: currentGuestRights.nom, 
+                        email: email 
+                    })
+                });
+
+                const successDiv = document.getElementById('alert-email-success');
+                successDiv.innerText = "✓ E-mail enregistré ! Tu seras prévenu(e) par mail.";
+                successDiv.classList.remove('hidden-element');
+
+                setTimeout(() => {
+                    closeAlertEmailModal();
+                }, 2000);
+
+            } catch(err) {
+                console.error(err);
+                alert("Erreur lors de l'enregistrement de l'e-mail.");
+            }
+        }
+
+        function verifyEscapeCode() {
+            const inputField = document.getElementById('escape-code-input');
+            const input = inputField.value.replace(/\s+/g, '');
+            const chatBox = document.getElementById('chat-messages');
+            
+            if(!input) return;
+
+            chatBox.insertAdjacentHTML('beforeend', `
+                <div class="bg-red-900 text-black font-bold p-3 self-end max-w-[80%] rounded-tl-lg rounded-tr-lg rounded-bl-lg mb-2">
+                    ${input}
+                </div>
+            `);
+            
+            inputField.value = '';
+            document.getElementById('chat-input-area').classList.add('hidden-element');
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            const typingHtml = `<div id="typing-indicator" class="text-red-900 text-xs italic">Inconnu est en train d'écrire...</div>`;
+            chatBox.insertAdjacentHTML('beforeend', typingHtml);
+
+            setTimeout(() => {
+                document.getElementById('typing-indicator').remove();
+                
+                if (escapeStep === 1) {
+                    if (input === '10042027') {
+                        chatBox.insertAdjacentHTML('beforeend', `
+                            <div class="bg-red-900/20 border border-red-900 p-3 text-red-500 self-start max-w-[80%] rounded-tr-lg rounded-br-lg rounded-bl-lg">
+                                Parfait, la 2ème partie du code, seule la mariée la connait. Va lui demander, mais j'espère que tu la connais bien...
+                            </div>
+                        `);
+                        escapeStep = 2;
+                        inputField.placeholder = "Code de la mariée...";
+                        document.getElementById('chat-input-area').classList.remove('hidden-element');
+                    } else {
+                        chatBox.insertAdjacentHTML('beforeend', `
+                            <div class="bg-red-900/20 border border-red-900 p-3 text-red-500 self-start max-w-[80%] rounded-tr-lg rounded-br-lg rounded-bl-lg">
+                                Code erroné... 
+                            </div>
+                        `);
+                        document.getElementById('chat-input-area').classList.remove('hidden-element');
+                    }
+                } 
+                else if (escapeStep === 2) {
+                    if (input === '0302') {
+                        chatBox.insertAdjacentHTML('beforeend', `
+                            <div class="bg-red-900/20 border border-red-900 p-3 text-red-500 self-start max-w-[80%] rounded-tr-lg rounded-br-lg rounded-bl-lg">
+                                > ACCÈS AUTORISÉ. OUVERTURE DU FICHIER...
+                            </div>
+                        `);
+                        setTimeout(() => {
+                            document.getElementById('chat-screen').classList.add('hidden-element');
+                            document.getElementById('video-payload-screen').classList.remove('hidden-element');
+                        }, 1500);
+                    } else {
+                        chatBox.insertAdjacentHTML('beforeend', `
+                            <div class="bg-red-900/20 border border-red-900 p-3 text-red-500 self-start max-w-[80%] rounded-tr-lg rounded-br-lg rounded-bl-lg">
+                                Code erroné. La mariée t'a menti ou tu as mal compris. Essaye encore.
+                            </div>
+                        `);
+                        document.getElementById('chat-input-area').classList.remove('hidden-element');
+                    }
+                }
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 2000);
+        }
+
+        function initiateSelfDestruct() {
+            document.getElementById('escape-chat-modal').classList.add('hidden-element');
+            
+            document.body.style.backgroundColor = 'black';
+            document.body.classList.add('glitch-mode');
+
+            const nodes = document.querySelectorAll('#main-site p, #main-site h1, #main-site h2, #main-site h3, #main-site div, #main-site img, #main-site button, #main-site a');
+
+            gsap.to(nodes, {
+                x: () => (Math.random() - 0.5) * window.innerWidth * 2.5,
+                y: () => (Math.random() - 0.5) * window.innerHeight * 2.5,
+                rotation: () => (Math.random() - 0.5) * 1080,
+                scale: () => Math.random() * 4,
+                opacity: 0,
+                duration: 2.5,
+                ease: "expo.in",
+                stagger: 0.005,
+                onComplete: () => {
+                    document.body.className = '';
+                    document.body.innerHTML = `
+                        <div style="height:100vh;width:100vw;display:flex;flex-direction:column;align-items:center;justify-content:center;background-color:#000;color:#ffffff;font-family:monospace;font-size:1.5rem;text-align:center;">
+                            > _CONNEXION INTERROMPUE.<br>
+                            > TRACES EFFACÉES.<br>
+                            <span style="font-size:0.8rem;color:#555;margin-top:20px;display:block;">[ TERMINAL HORS LIGNE ]</span>
+                        </div>
+                    `;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
